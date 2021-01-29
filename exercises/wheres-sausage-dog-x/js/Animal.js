@@ -10,12 +10,16 @@ class Animal {
       this.y = y;
       this.image = image;
       this.angle = 0;
+      this.visible = true;
     }
   
     // update()
     // Calls the display method
     update() {
-      this.display();
+      if(this.visible == true){
+        this.display();
+      }
+     
     }
   
     // display()
@@ -25,7 +29,7 @@ class Animal {
       imageMode(CENTER);
       translate(this.x, this.y);
       rotate(this.angle);
-      image(this.image, 0, 0);
+      image(this.image, 0, 0, 310*0.5, 438*0.5);
       pop();
     }
   

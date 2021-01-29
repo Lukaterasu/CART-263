@@ -1,12 +1,10 @@
 "use strict";
 
 /*****************
-Where's Sausage Dog?
-Pippin Barr
-Where's Waldo, except with a Sausage Dog!
-Displays a large number of random animal images as well as
-a single sausage dog image. The player needs to click on the
-dog to win the game.
+Where's the imposter?
+Luka Ross
+Where's Waldo, except with Among Us!
+Displays a series of characters, ONE of which is an IMPOSTER. The imposter CHANGES color after every "blink" (every 5 seconds).
 ******************/
 
 // Constants for image loading
@@ -15,7 +13,7 @@ const ANIMAL_IMAGE_PREFIX = `assets/images/mate`;
 const SAUSAGE_DOG_IMAGE = `assets/images/crewmate.png`;
 
 // Number of images to display
-const NUM_ANIMALS = 100;
+const NUM_ANIMALS = 30;
 
 // Array of the loaded animal images
 let animalImages = [];
@@ -25,6 +23,16 @@ let animals = [];
 let sausageDogImage;
 // Sausage dog object
 let sausageDog;
+// intervals between light switches
+let lightInterval = 5000;
+// total mouse clicks
+let clicks = 3;
+// timer variables
+let timer= 60;
+let isTime = true;
+// states
+let isPlay = true;
+let isEnd = false;
 
 // preload()
 // Loads all the animal images and the sausage dog image
@@ -49,6 +57,26 @@ function setup() {
 
   createAnimals();
   createSausageDog();
+  setTimeout(lightsOut, lightInterval);
+}
+
+function lightsOut(){
+  for (let i = 0; i < animals.length; i++) {
+    // Update the current animal
+    animals[i].visible = false;
+    sausageDog.visible = false;
+    sausageDog.image = random(animalImages);
+    
+  }
+  setTimeout(function(){
+    for (let i = 0; i < animals.length; i++) {
+      // Update the current animal
+      animals[i].visible = true;
+      sausageDog.visible = true;        
+    }
+    setTimeout(lightsOut, lightInterval);
+
+  },1500);
 }
 
 // createAnimals()
@@ -67,8 +95,8 @@ function createAnimals() {
 // Create an animal object at a random position with a random image
 // then return that created animal
 function createRandomAnimal() {
-  let x = random(0, width);
-  let y = random(0, height);
+  let x = random(100, width-100);
+  let y = random(100, height-100);
   let animalImage = random(animalImages);
   let animal = new Animal(x, y, animalImage);
   return animal;
@@ -77,18 +105,59 @@ function createRandomAnimal() {
 // createSausageDog()
 // Creates a sausage dog at a random position
 function createSausageDog() {
-  let x = random(0, width);
-  let y = random(0, height);
-  sausageDog = new SausageDog(x, y, sausageDogImage);
+  let x = random(100, width-100);
+  let y = random(100, height-100);
+  let randomSprite;
+  sausageDog = new SausageDog(x, y, random(animalImages));
 }
 
 // draw()
 // Draws the background then updates all animals and the sausage dog
 function draw() {
+
   background(255);
 
-  updateAnimals();
-  updateSausageDog();
+  if(isPlay == true){
+    updateAnimals();
+    updateSausageDog();
+    increaseTimer();
+    userInterface();
+  }
+  if(isEnd == true){
+  push();
+  textAlign(CENTER, CENTER);
+  textSize(width / 25);
+  fill(0);
+  text("defeat", width/2, height/2);
+  pop();
+  }
+ 
+}
+
+// displays time left and remaing clicks
+function userInterface(){
+push();
+textAlign(CENTER, CENTER);
+textSize(width / 25);
+fill(0);
+text("Time remaining: "+timer, width/2, 100);
+text("Clicks left: "+clicks, width/2, height-100);
+pop();
+if(clicks <= 0 || timer <= 0){
+  isEnd = true;
+  isPlay = false;
+}
+}
+
+// should be called decrease timer...
+function increaseTimer() {
+	if (isTime == true) {
+		timer = timer - 1;
+		setTimeout(function () {
+			isTime = true;
+		}, 1000);
+		isTime = false;
+	}
 }
 
 // updateAnimals()
@@ -113,4 +182,10 @@ function updateSausageDog() {
 // the mouse was clicked.
 function mousePressed() {
   sausageDog.mousePressed();
+  
+}
+
+function mouseClicked(){
+  clicks = clicks - 1;
+  console.log(clicks);
 }

@@ -30,4 +30,9 @@ class SausageDog extends Animal {
         this.found = true;
       }
     }
+
+    shapeshift(){
+
+      
+    }
   }
