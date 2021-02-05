@@ -2,8 +2,17 @@
 Template p5 project
 Luka Ross
 
-Here is a description of this template p5 project.
+
+Name as many animals as you can before time runs out.
+You only need to say the animal's name.
+Skipping an animal will reduce your timer.
+Start by pressing "Replay".
+
+Sorry for the messy code :{
+
 **************************************************/
+
+
 const animals =  [
     "aardvark",
     "alligator",
@@ -141,17 +150,25 @@ const animals =  [
     "zebra"
   ];
 let currentAnimal = "";
-let currentAnswer = "";
-
+let reverseAnimal = "";
+let currentAnswer = "[nothing]";
+let remainingChances = 3;
+let points = 0;
+let buttons = [];
+let startTime = false;
+let timer = 60;
+let isTime = true;
+let playButton;
 
 // setup()
 //
 // Description of setup() goes here.
 function setup() {
     createCanvas(windowWidth, windowHeight);
+    
     if(annyang){
         let commands = {
-            "I think it is *animal": guessAnimal
+            "*animal": guessAnimal
         };
         annyang.addCommands(commands);
         annyang.start();
@@ -160,6 +177,37 @@ function setup() {
         textStyle(BOLD);
         textAlign(CENTER);
     }
+    playButton = {
+        x: width/2-100,
+        y: height/2,
+        width: 100,
+        height: 100,
+        text: "replay",
+        textColour: "0",
+        colour: "yellow",
+        fonction: animalCall
+
+    }
+
+    skipButton = {
+        x: width/2+100,
+        y: height/2,
+        width: 100,
+        height: 100,
+        text: "skip",
+        textColour: "0",
+        colour: "red",
+        fonction: skipAnimal
+
+    }
+
+
+    makeButton(playButton);
+    makeButton(skipButton);
+    currentAnimal = random(animals);
+    reverseAnimal = reverseString(currentAnimal);
+   
+    
 }
  
 // draw()
@@ -167,24 +215,99 @@ function setup() {
 // Description of draw() goes here.
 function draw() {
     background(0);
-    if(currentAnswer === currentAnimal){
-        fill(0,255,0);
-    }else {
-        fill(255,0,0);
+    
+    if(timer <= 0){
+        fill(255);
+        textSize(50);
+        text("Score: "+ points, width/2, height/2);
+
+    } else {
+
+        userInterface();
+  
+        listener();
+        runObjects();
+
     }
-    text(currentAnswer, width/2, height/2);
+    
+    
 }
 
-function mousePressed(){
+function userInterface(){
+    if(startTime == true){
+        decreaseTimer();
+    }
+    push();
+    fill(255);
+    text("Time remaining: "+ timer, width/2, 100);
+    text("Points: "+ points, width/2, 200);
+
+    pop();
+}
+
+function makeButton({x, y, width, height, text, textColour, colour,fonction}){
+    
+    let button = new Button(x, y, width, height, text, textColour, colour, fonction);
+    buttons.push(button);
+    
+}
+
+function runObjects(){
+    for (let i = 0; i < buttons.length; i++) {
+        buttons[i].update();
+      }
+}
+
+
+function skipAnimal(){
+    newAnimal();
+    startTime = true;
+    timer -= 5;
+}
+
+function newAnimal(){
     currentAnimal = random(animals);
-    let reverseAnimal = reverseString(currentAnimal);
+    reverseAnimal = reverseString(currentAnimal);
+    responsiveVoice.speak(reverseAnimal);
+
+}
+
+
+
+function animalCall(){
+    startTime = true;
     responsiveVoice.speak(reverseAnimal);
 }
+let currentFill;
+function listener(){
+    if(currentAnswer == currentAnimal){
+        points += 1;
+        newAnimal();
+        fill(0,255,255);
+        
+    }else{
+        fill(255,0,0);
+        
+    }
+    text("'"+ currentAnswer +"'", width/2, height/2+250);
+    
+}
 
+
+
+function decreaseTimer() {
+	if (isTime == true) {
+		timer = timer - 1;
+		setTimeout(function () {
+			isTime = true;
+		}, 1000);
+		isTime = false;
+	}
+}
 function guessAnimal(animal){
     currentAnswer = animal.toLowerCase();
     console.log(currentAnswer);
-
+    
 }
 
 function reverseString(string) {
@@ -197,3 +320,9 @@ function reverseString(string) {
     // Return the result
     return result;
 }
+function mouseClicked() {
+    for (let i = 0; i < buttons.length; i++) {
+        buttons[i].mousePressed();
+    }
+    
+  }
