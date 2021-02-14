@@ -138,7 +138,7 @@ function listener(){
 
             annyang.addCallback('resultMatch', function(userSaid, commandText, phrases) {
                 if(userSaid == "yes" || userSaid == phrases){
-
+                localStorage.setItem('name', data.user.name);
                 texts.shift(); 
                 makeText(textContent.text5);
                 annyang.removeCommands();
@@ -151,34 +151,50 @@ function listener(){
         }
         
     }
-    if(canInputDate == true){
-        let command = {
-            "*date": date => data.user.date = date
-        };
-      
-        annyang.addCommands(command);
-        annyang.start();
-    if(data.user.date != ""){
-     
-        texts.shift(); 
-        textContent.text6.message = "Is the date "+ data.user.date + "?";
-        makeText(textContent.text6);
-        canInputDate = false;
 
-        annyang.addCallback('resultMatch', function(userSaid, commandText, phrases) {
-            if(userSaid == "yes" || userSaid == phrases){
+
+
+       
+       
+        if(canInputDate == true){
+            let command = {
+                "*date": (date) => {data.user.date = date}
+            };
+            annyang.addCommands(command);
+            annyang.start();
+        if(data.user.date != ""){
+            texts.shift(); 
+            textContent.text6.message = "Is the date "+ data.user.date + "?";
+            makeText(textContent.text6);
+            canInputDate = false;
+
+            annyang.addCallback('resultMatch', function(userSaid, commandText, phrases) {
+                if(userSaid == "yes"|| userSaid == phrases){
+                    alert(data.user.date);
+                // localStorage.setItem('date', data.user.date);
                 texts.shift(); 
                 makeText(textContent.text7);
                 annyang.removeCommands();
-            } else if(userSaid == "no"){
-            texts.shift();
-            data.user.date = "";
-            makeText(textContent.text5);
-            }
-           });
+                } else if(userSaid == "no"){
+                texts.shift();
+                data.user.date = "";
+                makeText(textContent.text5);
+                }
+               });
+        }
+        
     }
+    console.log(canInputDate);
+    // if(data.user.date != ""){
+    //     texts.shift(); 
+    //     textContent.text6.message = "Is the date "+ data.user.date + "?";
+    //     makeText(textContent.text6);
+    //     canInputDate = false;
+
+       
+    // }
     
-}
+
    
 
 }
