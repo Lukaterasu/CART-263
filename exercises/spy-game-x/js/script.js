@@ -185,17 +185,7 @@ function listener(){
         
     }
     console.log(canInputDate);
-    // if(data.user.date != ""){
-    //     texts.shift(); 
-    //     textContent.text6.message = "Is the date "+ data.user.date + "?";
-    //     makeText(textContent.text6);
-    //     canInputDate = false;
-
-       
-    // }
     
-
-   
 
 }
  
