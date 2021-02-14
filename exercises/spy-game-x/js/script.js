@@ -115,7 +115,7 @@ function setup() {
     }
 
     // makeButton(playButton);
-    makeText(textContent.text5);
+    makeText(textContent.text1);
     
 
    
