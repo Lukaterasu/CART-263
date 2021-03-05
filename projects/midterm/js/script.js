@@ -4,12 +4,14 @@ Luka Ross
 
 
 **************************************************/
+// Json
 let data = undefined;
+// Object arrays
 let buttons = [];
 let texts = [];
 let options = [];
 let mirrors = [];
-
+// everything related to images
 let mirror = {
     sprite: undefined,
     cracked: undefined,
@@ -23,7 +25,6 @@ let mirror = {
     impostor_normal: undefined,
     impostor_smile: undefined,
     impostor_jumpscare: undefined,
-
     x: undefined,
     y: undefined,
     width: 1440/2,
@@ -31,35 +32,41 @@ let mirror = {
     wiggle: 1
 
 }
-
+// cant remember
 let dares = [
     dare1 = {
         
     }
 ];
-
-
-let startTime = false;
-let timer = 10;
+// vatiables related to the timer
+let timer = 180;
 let isTimeUp = false;
-
-let red = "#670000";
-
 let isTime = false;
+// the shade of red i use
+let red = "#670000";
+// states of the game
 let isStart = false;
 let isPlay = true;
 let isEnd = false;
-
+// checks how many answers did the player get right, and which question he is at
 let chances = 3;
-
 let answerCount = 0;
-
-
+// did the player get the answer right
+let isRightAnswer = false;
+// the text that follows "..."
+let followUp;
+// checks if player can say a dare
 let canDare = true;
-let sprite;
+// huge text array
 let textContent = undefined;
-let canInputName = false;
-let canInputDate = false;
+// command i use everywhere
+let command1;
+// did the player double check his reflection??
+let isImpostor = false;
+// variables to change background color
+let isRed = false;
+let bgColour = 0;
+// loading all my images and fonts
 function preload(){
     data = loadJSON("../assets/data/data.json");
     fontRegular = loadFont('assets/century.ttf');
@@ -76,15 +83,9 @@ function preload(){
     mirror.impostor_smile = loadImage('assets/images/mirror_impostor_smile.png');
     mirror.impostor_jumpscare = loadImage('assets/images/mirror_impostor_jumpscare.png');
     mirror.cracked = loadImage('assets/images/mirror_cracked.png');
-
-
-
 }
-let command1;
-let commandDare;
-// let buttonContent;
-// let textContent;
-// let noContent;
+
+// riddles and their answers (don't look)
 let riddlesContent = [
     riddle1= {
         question: "I’m tall when I’m young, and I’m short when I’m old. What am I?",
@@ -106,49 +107,42 @@ let riddlesContent = [
         question: "The more of this there is, the less you see. What is it?",
         answer: ["darkness", "the darkness", "the dark"]
     }
-
 ]
-let isImpostor = false;
 
-
+// LOTS OF DATA
 function setup() {
     createCanvas(windowWidth, windowHeight);
-
     if(annyang){
-        
-       
-       
-      
-       
-       
         textAlign(CENTER);
         textFont(fontRegular);
-        
     }
-
+    // these will indicate what the player can say
     optionsContent = {
         option1: {
-
             x: width/2,
             y: height/2+200,
             message: "(proceed by saying yes)",
             size: 30,
-            wiggle: 0.5,
-            
+            wiggle: 0.5,    
         },
         option2: {
-
             x: width/2,
             y: height/2+200,
             message: "(yes or no)",
             size: 30,
             wiggle: 0.5,
-            
+        },
+        option02: {
+            x: width/2,
+            y: height/2+400,
+            message: "(yes or no)",
+            size: 30,
+            wiggle: 0.5,  
         }
     }
    
+    // data for the buttons
     buttonContent = {
-
         button1: {
             x: width/2,
             y: height/2,
@@ -157,8 +151,7 @@ function setup() {
             text: "start",
             textColour: "0",
             colour: red,
-            
-            fonction: () => {makeText(textContent.text1); buttons.shift();}
+            fonction: () => {makeText(textContent.text0); buttons.shift();}
         },
         button2: {
             x: width/2+400,
@@ -168,7 +161,6 @@ function setup() {
             text: "continue",
             textColour: "0",
             colour: red,
-            
             fonction: () => {cleanup();makeText(textContent.text8); buttons.shift();}
         },
         button3: {
@@ -179,7 +171,6 @@ function setup() {
             text: "continue",
             textColour: "0",
             colour: red,
-            
             fonction: () => {cleanup(); makeText(textContent.text9); buttons.shift();}
         },
         button4: {
@@ -190,9 +181,7 @@ function setup() {
             text: "continue",
             textColour: "0",
             colour: red,
-            
-            fonction: () => {cleanup(); makeText(textContent.text10); buttons.shift(); makeMirror(mirror.yourself_normal, mirror.x, mirror.y, mirror.width, mirror.height, 0);
-
+            fonction: () => {cleanup(); makeText(textContent.text10); buttons.shift(); mirrors.shift();makeMirror(mirror.yourself_normal, mirror.x, mirror.y, mirror.width, mirror.height, 0);
             }
         },
         button5: {
@@ -203,10 +192,8 @@ function setup() {
             text: "leave",
             textColour: "0",
             colour: red,
-            
             fonction: () => {
                 if(isTimeUp == true){
-
                 }
                 else if(isImpostor == false){
                     cleanup()
@@ -217,11 +204,9 @@ function setup() {
                     clearTimeout(notImpostor);
                     cleanup2();
                     followUp = impostorContent.impostor1;
-                    makeText(devilContent.text1);
-                   
+                    makeText(devilContent.text1); 
                 }
                 buttons.shift();
-                
             }
         },
         button6: {
@@ -232,24 +217,33 @@ function setup() {
             text: "leave",
             textColour: "0",
             colour: red,
-            
             fonction: () => {
                cleanup2();
                isRed = true;
-             
-                   followUp = endingContent.ending007;
-                    makeText(devilContent.text1);
-
-                
+                followUp = endingContent.ending007;
+                makeText(devilContent.text1);  
             }
         }
     }
-
-    let isRightAnswer = false;
+// data for the first part of the simulation
     textContent = {
+        text0: {
+            x: width/4,
+            y: height/2,
+             message: "If you beat the Devil at his game, he will owe you a favour. If you lose, your soul will be at his mercy.",
+            size: 30,
+            colour: red,
+            align: CENTER,
+            wiggle: 1,
+            width: width/2,
+            code: 1,
+            fonction: () => {
+               setTimeout(()=>{cleanup();makeText(textContent.text1)}, 3000)
+            }
+        },
         text1: {
             x: width/4,
-            y: height/3+100,
+            y: height/2,
              message: "Are you sure you want to proceed?",
             size: 30,
             colour: red,
@@ -284,8 +278,6 @@ function setup() {
                 annyang.addCommands(command1);
                 annyang.start();
                 makeOption(optionsContent.option2);
-               
-            
             },
             yes: () => { cleanup(); makeText(textContent.text3);},
             no: () => { cleanup(); makeText(noContent.no1);}
@@ -339,7 +331,6 @@ function setup() {
             size: 30,
             colour: red,
             wiggle: 1,
-         
             fonction: () => {
                 command1 = {
                     "*answer": answer => yesNo(answer)
@@ -347,36 +338,32 @@ function setup() {
                 annyang.addCommands(command1);
                 annyang.start();
                 makeOption(optionsContent.option2);
-               
-            
             },
             yes: () => { cleanup(); makeMirror(mirror.sprite, mirror.x, mirror.y, mirror.width, mirror.height, 1); makeText(textContent.text6)},
             no: () => { cleanup(); makeText(noContent.no4);}
         },
         text6: {
-            x: width/2,
+            x: width/4,
             y: height/2+300,
-            message: "The Devil’s Game has a set of rules you must follow AT ALL COSTS.",
+            message: "The Devil’s Game has a set of rules you must follow, for your own safety.",
             size: 30,
             colour: red,
             wiggle: 1,
-         
+            width:width/2,
             fonction: () => {
                 setTimeout(() => { cleanup(); makeText(textContent.text7)}, 3000)
-             
              },
         },
         text7: {
             x: width/4,
             y: height/2+300,
-            message: "Rule number one. Do NOT spend more than six minutes with the Devil. To end the game, shout 'THANK YOU AND FAREWELL.' If you do not say this, the Devil WON'T leave.",
+            message: "Rule number one. Do NOT spend more than three minutes with the Devil. To end the game, shout 'FAREWELL.'",
             size: 30,
             colour: red,
             wiggle: 1,
             width: width/2,
             fonction: () => {
                 makeButton(buttonContent.button2);
-             
              },
         },
         text8: {
@@ -394,7 +381,7 @@ function setup() {
         text9: {
             x: width/4,
             y: height/2+300,
-            message: "Last rule. If there is ever a question you cannot answer, you may ONCE choose to take a dare by saying 'I CHOOSE DARE.' However, make sure to go through with it.",
+            message: "Last rule. If there is ever a question you cannot answer, you may ONCE choose to take a dare by saying 'I CHOOSE DARE.'",
             size: 30,
             colour: red,
             wiggle: 1,
@@ -416,47 +403,43 @@ function setup() {
                 };
                 annyang.addCommands(command1);
                 annyang.start();
-                makeOption(optionsContent.option2);
+                makeOption(optionsContent.option02);
              },
              yes: () => { cleanup(); makeText(textContent.text11)},
              no: () => { cleanup(); makeText(textContent.text10);}
         },
         text11: {
-            x: width/2,
+            x: width/4,
             y: height/2+300,
             message: "Remember your appearance. Only when it's your OWN reflection, should you leave...",
             size: 30,
             colour: red,
             wiggle: 1,
+            width: width/2,
             fonction: () => {
                 setTimeout(() => { cleanup(); makeText(textContent.text12)}, 3000)
              }
         },
         text12: {
-            x: width/2,
+            x: width/4,
             y: height/2+300,
-            // message: "You are ready to attempt the Devil’s game. To begin, close your eyes and count to 10. ",
-             message: "10. ",
+            message: "You are ready to attempt the Devil’s game. To begin, close your eyes and count down from 7. ",
             size: 30,
             colour: red,
             wiggle: 1,
+            width:width/2,  
             fonction: () => {
+                // once the player counts down, the devil will appear
                 command1 = {
                     "*answer": answer => counted(answer)
                 };
                 annyang.addCommands(command1);
                 annyang.start();
-                // makeOption(optionsContent.option2);
-             },
-             yes: () => { alert("yes")},
-             no: () => { alert("no")}
+             }
         },
-
-
-
-        
-
     }
+
+    // data for the second part of the simulation
     devilContent  = {
         text1: {
             x: width/2,
@@ -472,9 +455,7 @@ function setup() {
         text2: {
             x: width/4,
             y: height/2+300,
-            // message: "Challenger... To win my game, you must simply answer 3 of my questions correctly...",
-                        message: "questions correctly...",
-
+            message: "Challenger... To win my game, you must simply answer 3 of my questions correctly...",
             size: 30,
             colour: red,
             wiggle: 1,
@@ -500,8 +481,8 @@ function setup() {
                 isRightAnswer = false;
                 command1 = {
                     "*answer": function(userSaid){
-                
-                    if((userSaid.toLowerCase() == "dare" || userSaid.toLowerCase() == "bear"|| userSaid.toLowerCase() == "there")&&(canDare == true)){
+                        console.log(userSaid);
+                    if((userSaid.toLowerCase() == "I choose dare" || userSaid.toLowerCase() == "I choose bear"|| userSaid.toLowerCase() == "I choose there")&&(canDare == true)){
                         answerCount = answerCount + 1;
                         annyang.removeCommands("*answer");
                         cleanup2();
@@ -512,7 +493,7 @@ function setup() {
                         annyang.removeCommands("*answer");
                         cleanup2();
                         makeText(devilContent.text3);
-                    } else if(userSaid.toLowerCase() == "end"){
+                    } else if(userSaid.toLowerCase() == "farewell"){
                        
                         ending();
                     }else{
@@ -546,15 +527,10 @@ function setup() {
 
                    
                 };
-                // annyang.addCallback('resultMatch', function(userSaid, commandText, phrases) {
-                //     if(userSaid.toLowerCase() == "end"){
-                       
-                //         ending();
-                //     }
-                //   });
+               
                
                 annyang.addCommands(command1);
-                //remove
+               
                 annyang.start();
              },
              answer: ""
@@ -1071,44 +1047,40 @@ function setup() {
                     }
                 };
                 annyang.addCommands(command1);
-                makeOption(optionsContent.option2);
+                makeOption(optionsContent.option02);
                
             
             }
         }
     ];
 
-    
-
     mirror.x = width/2;
     mirror.y = height/2 - 75;
    
     // makeButton(buttonContent.button1);
-    
-    makeText(devilContent.text2);
-    // makeMirror(mirror.sprite, mirror.x, mirror.y, mirror.width, mirror.height, 0);
-    makeMirror(mirror.devil_normal, mirror.x, mirror.y, mirror.width, mirror.height, 0);
-    isTime = true;
+    makeText(textContent.text5);
+    // makeMirror(mirror.devil_normal, mirror.x, mirror.y, mirror.width, mirror.height, 0);
+    // makeText(devilContent.text1);
+
+   
+   
 
     
 }
 
-function failDare(){
 
-}
-let isRed = false;
-let bgColour = 0;
+
+
 function makeRed(){ 
-bgColour+= 1;
-bgColour = constrain(bgColour, 0, 200);
-if(bgColour >= 200){
-    isRed = false;
-}
+    bgColour+= 1;
+    bgColour = constrain(bgColour, 0, 200);
+    if(bgColour >= 200){
+        isRed = false;
+    }
 }
 function ending(){
+    
 cleanup();
-
-
 if(chances == 3 && answerCount>1){
     endingBool.ending1 = true;
    
@@ -1125,7 +1097,7 @@ if(endingBool.ending1 == true){
     makeText(endingContent.ending1);
     endMessage = "You have gained the Devil's favour.";
 } else if(endingBool.ending2 == true){
-   
+    
     makeText(endingContent.ending2)
     endMessage = "You have survived the encounter.";
 } else if(endingBool.ending3 == true){
@@ -1161,31 +1133,12 @@ if(endingBool.ending1 == true){
 }
 
 }
-let followUp;
+
 function generateQuestion(){
     let question = Math.floor(Math.random() * riddlesContent.length);
     devilContent.text3.message = riddlesContent[question].question;
     devilContent.text3.answer = riddlesContent[question].answer;
     riddlesContent.splice(question, 1);
-    // if(canDare == true){
-    //     commandDare = {
-
-    //     "*dare": (dare) => {
-           
-
-    //         if(dare == "dare" || dare == "bear"){
-                
-    //            annyang.removeCommands("*answer");
-    //            cleanup2();
-    //            makeText(dares[0]);
-    //            canDare = false;
-    //         }
-    //     }
-    // }
-    
-    // annyang.addCommands(commandDare);
-
-    // }
 
 }
 function cleanup(){
@@ -1222,13 +1175,14 @@ function yesNo(answer){
 }
 
 function counted(answer){
-    if(answer == "1" || answer == "won"){
+    if(answer == "7 6 5 4 3 2 1" || answer == "won" || answer == "7 6 5 4 3 2 1 0"){
         cleanup();
         isTime = true;
 
-        mirrors.pop();
+        mirrors.shift();
         followUp = devilContent.text2;
         makeMirror(mirror.devil_normal, mirror.x, mirror.y, mirror.width, mirror.height, 0);
+        isTime = true;
         setTimeout(() => makeText(devilContent.text1), 2000);
         // annyang.start();
        
@@ -1260,7 +1214,6 @@ function draw() {
             decreaseTimer();
         }
         
-        console.log(timer);
 
        
        

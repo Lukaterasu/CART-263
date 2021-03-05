@@ -13,9 +13,7 @@ function makeMirror(sprite, x, y, width, height,wiggle){
 }
 
 function userInterface(){
-    if(startTime == true){
-        decreaseTimer();
-    }
+   
     push();
     textAlign(CENTER, CENTER);
     fill(255);
