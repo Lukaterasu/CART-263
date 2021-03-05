@@ -1,5 +1,5 @@
-function makeText({x, y, message, size, colour, wiggle, align, width, height, code, yes, no, fonction}){
-    let text = new Text(x, y, message, size, colour, wiggle, align, width, height, code, yes, no, fonction);
+function makeText({x, y, message, size, colour, wiggle, align, width, height, code, yes, no, fonction,scary}){
+    let text = new Text(x, y, message, size, colour, wiggle, align, width, height, code, yes, no, fonction, scary);
     texts.push(text);
 }
 
@@ -53,6 +53,21 @@ function decreaseTimer() {
 	}
     if(timer <= 0){
         isTimeUp = true;
+        makeMirror(mirror.cracked, mirror.x, mirror.y, mirror.width, mirror.height, 0);
+        annyang.removeCommands();
+        command1 = {
+            "*answer": () => {
+               
+                    cleanup2();
+                   followUp = endingContent.ending7;
+                   makeText(devilContent.text1);
+
+                 }
+                
+            }
+        
+        annyang.addCommands(command1);
+        annyang.start();
     }
 }
 

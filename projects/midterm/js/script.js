@@ -12,8 +12,18 @@ let mirrors = [];
 
 let mirror = {
     sprite: undefined,
+    cracked: undefined,
     yourself_normal: undefined,
+    yourself_happy: undefined,
+    yourself_old: undefined,
     devil_normal: undefined,
+    devil_behind: undefined,
+    devil_jumpscare: undefined,
+    devil_smile: undefined,
+    impostor_normal: undefined,
+    impostor_smile: undefined,
+    impostor_jumpscare: undefined,
+
     x: undefined,
     y: undefined,
     width: 1440/2,
@@ -30,7 +40,7 @@ let dares = [
 
 
 let startTime = false;
-let timer = 360;
+let timer = 10;
 let isTimeUp = false;
 
 let red = "#670000";
@@ -39,6 +49,12 @@ let isTime = false;
 let isStart = false;
 let isPlay = true;
 let isEnd = false;
+
+let chances = 3;
+
+let answerCount = 0;
+
+
 let canDare = true;
 let sprite;
 let textContent = undefined;
@@ -50,7 +66,16 @@ function preload(){
     fontScary = loadFont('assets/onryou.ttf');
     mirror.sprite = loadImage('assets/images/mirror_empty.png');
     mirror.yourself_normal = loadImage('assets/images/mirror_yourself_normal.png');
+    mirror.yourself_happy = loadImage('assets/images/mirror_yourself_happy.png');
+    mirror.yourself_old = loadImage('assets/images/mirror_yourself_old.png');
     mirror.devil_normal = loadImage('assets/images/mirror_devil_normal.png');
+    mirror.devil_behind = loadImage('assets/images/mirror_devil_behind.png');
+    mirror.devil_smile = loadImage('assets/images/mirror_devil_smile.png');
+    mirror.devil_jumpscare = loadImage('assets/images/mirror_devil_jumpscare.png');
+    mirror.impostor_normal = loadImage('assets/images/mirror_impostor_normal.png');
+    mirror.impostor_smile = loadImage('assets/images/mirror_impostor_smile.png');
+    mirror.impostor_jumpscare = loadImage('assets/images/mirror_impostor_jumpscare.png');
+    mirror.cracked = loadImage('assets/images/mirror_cracked.png');
 
 
 
@@ -72,10 +97,18 @@ let riddlesContent = [
     riddle3= {
         question: "What is always in front of you but can’t be seen?",
         answer: ["the future", "future"]
+    },
+    riddle4= {
+        question: "What can you keep after giving to someone?",
+        answer: ["word", "your word"]
+    },
+    riddle5= {
+        question: "The more of this there is, the less you see. What is it?",
+        answer: ["darkness", "the darkness", "the dark"]
     }
 
 ]
-
+let isImpostor = false;
 
 
 function setup() {
@@ -113,7 +146,7 @@ function setup() {
             
         }
     }
-
+   
     buttonContent = {
 
         button1: {
@@ -162,9 +195,57 @@ function setup() {
 
             }
         },
+        button5: {
+            x: width/2+400,
+            y: height/2,
+            width: 150,
+            height: 75,
+            text: "leave",
+            textColour: "0",
+            colour: red,
+            
+            fonction: () => {
+                if(isTimeUp == true){
+
+                }
+                else if(isImpostor == false){
+                    cleanup()
+                    mirrors.shift();
+                    isPlay = false;
+                    isEnd = true;
+                } else {
+                    clearTimeout(notImpostor);
+                    cleanup2();
+                    followUp = impostorContent.impostor1;
+                    makeText(devilContent.text1);
+                   
+                }
+                buttons.shift();
+                
+            }
+        },
+        button6: {
+            x: width/2+400,
+            y: height/2,
+            width: 150,
+            height: 75,
+            text: "leave",
+            textColour: "0",
+            colour: red,
+            
+            fonction: () => {
+               cleanup2();
+               isRed = true;
+             
+                   followUp = endingContent.ending007;
+                    makeText(devilContent.text1);
+
+                
+            }
+        }
     }
 
-    
+    let isRightAnswer = false;
     textContent = {
         text1: {
             x: width/4,
@@ -399,7 +480,12 @@ function setup() {
             wiggle: 1,
             width: width/2,
             fonction: () => {
-                setTimeout(() => { cleanup2(); generateQuestion(); makeText(devilContent.text3)}, 3000)
+                setTimeout(() => { 
+                    cleanup2(); 
+                    generateQuestion(); 
+                    makeText(devilContent.text3);
+                   
+                }, 3000)
              }
         },
         text3: {
@@ -411,18 +497,63 @@ function setup() {
             wiggle: 1,
             width: width/2,
             fonction: () => {
+                isRightAnswer = false;
                 command1 = {
-                    "*answer": (answer) => {
-                        
-                       devilContent.text3.answer.forEach(function(data){
-                           if(data == answer){
-                               alert("sheesh");
-                           }
-                       })
-                    }
-                };
-                annyang.addCommands(command1);
+                    "*answer": function(userSaid){
+                
+                    if((userSaid.toLowerCase() == "dare" || userSaid.toLowerCase() == "bear"|| userSaid.toLowerCase() == "there")&&(canDare == true)){
+                        answerCount = answerCount + 1;
+                        annyang.removeCommands("*answer");
+                        cleanup2();
+                        makeText(dares[0]);
+                        canDare = false;
+                    } else if((userSaid.toLowerCase() == "dare" || userSaid.toLowerCase() == "bear"|| userSaid.toLowerCase() == "there")&&(canDare == false)){
+                        alert("you can only dare once");
+                        annyang.removeCommands("*answer");
+                        cleanup2();
+                        makeText(devilContent.text3);
+                    } else if(userSaid.toLowerCase() == "end"){
+                       
+                        ending();
+                    }else{
 
+                        devilContent.text3.answer.forEach(function(data){
+                            if(data == userSaid.toLowerCase()){
+                                isRightAnswer = true;
+                            } 
+                        })
+                        if(isRightAnswer!= true){
+                         chances = chances -1;
+                         chances = constrain(chances, 0, 3);
+                        } 
+                        answerCount = answerCount + 1;
+                        annyang.removeCommands('*answer');
+                        if(answerCount >= 3){
+                            
+                            ending();
+                        }else{
+                         cleanup2();
+                         generateQuestion();
+                         followUp = devilContent.text3;
+                         makeText(devilContent.text1);
+                        }
+
+                    }
+                      
+                      
+                    }
+                    
+
+                   
+                };
+                // annyang.addCallback('resultMatch', function(userSaid, commandText, phrases) {
+                //     if(userSaid.toLowerCase() == "end"){
+                       
+                //         ending();
+                //     }
+                //   });
+               
+                annyang.addCommands(command1);
                 //remove
                 annyang.start();
              },
@@ -491,29 +622,454 @@ function setup() {
 
         }
     }
+    endingBool = {
+        ending1: false,
+        ending2: false,
+        ending3: false,
+        ending4: false,
+        ending5: false,
+        ending6: false
+    }
+    endingContent = {
+        ending1: {
+            x: width/4,
+            y: height/2+300,
+            message: "The Devil gives you a nod before disappearing.",
+            size: 30,
+            colour: red,
+            align: CENTER,
+            wiggle: 1,
+            width: width/2,
+            fonction: () => {
+            
+                setTimeout(() => {
+                    mirrors.shift();
+                    cleanup2();
+                    makeMirror(mirror.yourself_happy, mirror.x, mirror.y, mirror.width, mirror.height, 0);
+                    makeText(endingContent.ending01);
+
+
+
+                }, 3000);
+            },
+
+        },
+        ending01: {
+            x: width/4,
+            y: height/2+300,
+            message: "You leave your encounter with a feeling of satisfaction.",
+            size: 30,
+            colour: 255,
+            align: CENTER,
+            wiggle: 1,
+            width: width/2,
+            fonction: () => {
+            
+                setTimeout(() => {
+
+                    makeButton(buttonContent.button5);
+                    
+
+                }, 3000);
+            },
+
+        },
+        ending2: {
+            x: width/4,
+            y: height/2+300,
+            message: "...",
+            size: 30,
+            colour: red,
+            align: CENTER,
+            wiggle: 1,
+            width: width/2,
+            fonction: () => {
+                setTimeout(() => {
+                  
+                    mirrors.shift();
+                    
+                    cleanup2();
+                    makeMirror(mirror.impostor_normal, mirror.x, mirror.y, mirror.width, mirror.height, 0);
+                    makeText(endingContent.ending02);
+
+
+
+                }, 3000);
+             
+               
+                
+            },
+
+        },
+        ending02: {
+            x: width/4,
+            y: height/2+300,
+            message: "You leave your encounter with the Devil. Everything seems normal.",
+            size: 30,
+            colour: red,
+            align: CENTER,
+            wiggle: 1,
+            width: width/2,
+            fonction: () => {
+            
+                isImpostor = true;
+                
+                notImpostor = setTimeout(()=> {
+                    isImpostor = false;
+                    mirrors.shift();
+                    makeMirror(mirror.yourself_normal, mirror.x, mirror.y, mirror.width, mirror.height, 0);
+                    
+                }, 4000);
+                makeButton(buttonContent.button5);
+
+              
+            },
+
+        },
+        ending3: {
+            x: width/4,
+            y: height/2+300,
+            message: "The Devil’s smile grows larger.",
+            size: 30,
+            colour: red,
+            align: CENTER,
+            wiggle: 1,
+            width: width/2,
+            fonction: () => {
+            
+                setTimeout(() => {
+                   
+                   
+                    cleanup2();
+                   
+                    makeText(endingContent.ending03);
+
+
+
+                }, 3000);
+            },
+
+        },
+        ending03: {
+            x: width/4,
+            y: height/2+300,
+            message: "He smirks, and disappears.",
+            size: 30,
+            colour: red,
+            align: CENTER,
+            wiggle: 1,
+            width: width/2,
+            fonction: () => {
+            
+                setTimeout(() => {
+                   
+                    mirrors.shift();
+                    makeMirror(mirror.yourself_old, mirror.x, mirror.y, mirror.width, mirror.height, 0);
+                    cleanup2();
+                    setTimeout(() => {   makeText(endingContent.ending003);}, 3000);
+                  
+
+                }, 3000);
+            },
+
+        },
+        ending003: {
+            x: width/4,
+            y: height/2+300,
+            message: "You seem too have lost your vitality...",
+            size: 30,
+            colour: red,
+            align: CENTER,
+            wiggle: 1,
+            width: width/2,
+            fonction: () => {
+            
+                setTimeout(() => {
+                    makeButton(buttonContent.button5);
+                }, 3000);
+            },
+
+        },
+        ending4: {
+            x: width/4,
+            y: height/2+300,
+            message: "'We will see eachother soon.'",
+            size: 30,
+            colour: red,
+            align: CENTER,
+            wiggle: 1,
+            width: width/2,
+            fonction: () => {
+            
+                setTimeout(() => {
+                   
+                    mirrors.shift();
+                makeMirror(mirror.yourself_normal, mirror.x, mirror.y, mirror.width, mirror.height, 0);
+                    cleanup2();
+                    makeText(endingContent.ending04);
+
+
+                }, 3000);
+            },
+
+        },
+        ending04: {
+            x: width/4,
+            y: height/2+300,
+            message: "You feel uneasy...",
+            size: 30,
+            colour: red,
+            align: CENTER,
+            wiggle: 1,
+            width: width/2,
+            fonction: () => {
+            
+                setTimeout(() => {
+                   
+                 
+                    cleanup2();
+                    makeText(endingContent.ending004);
+
+
+
+                }, 3000);
+            },
+
+        },
+        ending004: {
+            x: width/4,
+            y: height/2+300,
+            message: "Something is behind you...",
+            size: 30,
+            colour: red,
+            align: CENTER,
+            wiggle: 1,
+            width: width/2,
+            fonction: () => {
+                
+                    makeMirror(mirror.devil_behind, mirror.x, mirror.y, mirror.width, mirror.height, 2);
+                setTimeout(() => {
+                   
+                            
+                   
+                    setTimeout(() => {
+                        
+                            isRed = true;
+                        },3000);
+
+                        setTimeout(() => {
+                        
+                           isPlay = false;
+                           isEnd = true;
+                        },10000);
+                   
+
+
+                }, 3000);
+            },
+            scary: true
+
+        },
+        ending5: {
+            x: width/4,
+            y: height/2+300,
+            message: "The Devil smiles.",
+            size: 30,
+            colour: red,
+            align: CENTER,
+            wiggle: 1,
+            width: width/2,
+            fonction: () => {
+            
+                setTimeout(() => {
+                   
+                    
+                    makeMirror(mirror.cracked, mirror.x, mirror.y, mirror.width, mirror.height, 0);
+                    cleanup2();
+                    makeText(endingContent.ending05);
+
+
+                }, 3000);
+            },
+
+        },
+        ending05: {
+            x: width/4,
+            y: height/2+300,
+            message: "Cracks are forming on the surface of your mirror...",
+            size: 30,
+            colour: red,
+            align: CENTER,
+            wiggle: 1,
+            width: width/2,
+            fonction: () => {
+                mirrors.shift();
+                mirrors.shift();
+                makeMirror(mirror.devil_jumpscare, mirror.x, mirror.y, mirror.width, mirror.height, 2);
+               setTimeout(() => {
+               
+               
+                cleanup2();
+              
+                makeText(endingContent.ending005);
+                isRed = true;
+            },3000);
+
+            },
+
+        },
+        ending005: {
+            x: width/4,
+            y: height/2+300,
+            message: "Your time has run out...",
+            size: 30,
+            colour: 0,
+            align: CENTER,
+            wiggle: 1,
+            width: width/2,
+            fonction: () => {
+            
+            },
+            scary: true
+
+        },
+        ending7: {
+            x: width/4,
+            y: height/2+300,
+            message: "Cracks are appearing on the mirror...",
+            size: 30,
+            colour: red,
+            align: CENTER,
+            wiggle: 1,
+            width: width/2,
+            fonction: () => {
+            
+                setTimeout(() => {
+                   
+                    
+            
+                    cleanup2();
+                    makeText(endingContent.ending07);
+
+
+                }, 3000);
+            },
+
+        },
+        ending07: {
+            x: width/4,
+            y: height/2+300,
+            message: "You feel the Devil's presence getting stronger... You want to run away.",
+            size: 30,
+            colour: red,
+            align: CENTER,
+            wiggle: 1,
+            width: width/2,
+            fonction: () => {
+            
+                makeButton(buttonContent.button6);
+            },
+
+        },
+        ending007: {
+            x: width/4,
+            y: height/2+300,
+            message: "You cannot escape...",
+            size: 30,
+            colour: 0,
+            align: CENTER,
+            wiggle: 1,
+            width: width/2,
+            fonction: () => {
+            
+                setTimeout(() => {
+                    endMessage = "Never spend more than three minutes with the Devil.";
+                    isPlay = false;
+                    isEnd = true;
+
+                    
+               
+
+                }, 3000);
+            },
+            scary: true
+
+        }
+        
+    }
+    let notImpostor;
+    impostorContent = {
+        impostor1: {
+            x: width/4,
+            y: height/2+300,
+            message: "You leave the mirror. However, your reflection remains still, looking at you.",
+            size: 30,
+            colour: red,
+            align: CENTER,
+            wiggle: 1,
+            width: width/2,
+            fonction: () => {
+                endMessage = "Only leave when it's your own reflection.";
+                setTimeout(() => {
+                    mirrors.shift();
+                   
+                    makeMirror(mirror.impostor_smile, mirror.x, mirror.y, mirror.width, mirror.height, 1);
+                    setTimeout(() => {
+                        cleanup2();
+                    mirrors.shift();
+                   
+                    makeMirror(mirror.impostor_jumpscare, mirror.x, mirror.y, mirror.width, mirror.height, 2);
+                        isRed = true;
+                        setTimeout(()=>{  isEnd = true;
+                            isPlay = false;}, 4000)
+                       
+                    },3000);
+
+
+
+                }, 1500);
+            },
+
+        },
+    }
     dares = [
         dare1 = {
-            x: width/2,
-            y:  height/2+300,
+            x: width/4,
+            y: height/2+300,
             message: "I dare you to cover your eyes for three seconds. Will you do it?",
             size: 30,
             colour: red,
             wiggle: 1,
+            width: width/2,
             fonction: () => {
                 command1 = {
                     "*answer": (answer) => {
-                        console.log(answer);
-
-
-                        if(answer == "yes"){
-                            alert("dead")
+                       
+                        if(answer.toLowerCase() == "yes"){
+                            endingBool.ending6 = true;
+                            ending();
                      
-                         } else if(answer == "no"){
-                            alert("safe")
+                         } else if(answer.toLowerCase() == "no"){
+
+                            if(answerCount>=3){
+                               
+                                ending();
+
+                            }else{
+                                
+                                chances = chances -1;
+                                chances = constrain(chances, 0, 3);
+                                cleanup2();
+                                generateQuestion();
+                                followUp = devilContent.text3;
+                                makeText(devilContent.text1);
+                            }
+                           
+
                          }
+                         annyang.removeCommands("*answer");
                     }
                 };
-                annyang.removeCommands("*dare");
                 annyang.addCommands(command1);
                 makeOption(optionsContent.option2);
                
@@ -534,41 +1090,102 @@ function setup() {
     makeMirror(mirror.devil_normal, mirror.x, mirror.y, mirror.width, mirror.height, 0);
     isTime = true;
 
-  
     
+}
+
+function failDare(){
+
+}
+let isRed = false;
+let bgColour = 0;
+function makeRed(){ 
+bgColour+= 1;
+bgColour = constrain(bgColour, 0, 200);
+if(bgColour >= 200){
+    isRed = false;
+}
+}
+function ending(){
+cleanup();
 
 
+if(chances == 3 && answerCount>1){
+    endingBool.ending1 = true;
+   
+} else if((chances==2 || answerCount <= 1)&& endingBool.ending6 == false){
+    endingBool.ending2 = true;
+}else if(chances==1){
+    endingBool.ending3 = true;
+} else if(chances==0){
+    endingBool.ending4 = true;
+}
+
+if(endingBool.ending1 == true){
+   
+    makeText(endingContent.ending1);
+    endMessage = "You have gained the Devil's favour.";
+} else if(endingBool.ending2 == true){
+   
+    makeText(endingContent.ending2)
+    endMessage = "You have survived the encounter.";
+} else if(endingBool.ending3 == true){
+   
+    makeText(endingContent.ending3)
+    mirrors.shift();
+    makeMirror(mirror.devil_smile, mirror.x, mirror.y, mirror.width, mirror.height, 0);
+    endMessage = "You have survived, but at what cost...";
+
+}else if(endingBool.ending4 == true){
+   
+    followUp = endingContent.ending4;
+    makeText(devilContent.text1);
+    endMessage = "Best to prepare before challenging the Devil.";
+}else if(endingBool.ending5 == true){
    
     
+    makeText(endingContent.ending5);
+    mirrors.shift();
+    makeMirror(mirror.devil_smile, mirror.x, mirror.y, mirror.width, mirror.height, 0);
+    endMessage = "Do not spend more than 3 minutes with the Devil.";
+} else if(endingBool.ending6 == true){
+    mirrors.shift();
+    endMessage = "Never let the devil out of sight.";
+    setTimeout(()=>{  makeMirror(mirror.devil_jumpscare, mirror.x, mirror.y, mirror.width, mirror.height, 0);}, 5000);
+    setTimeout(()=>{   isRed=true;}, 7000);
+    setTimeout(()=>{   isPlay = false;
+    isEnd = true;}, 10000);
 
    
-    
+
+   
+}
+
 }
 let followUp;
 function generateQuestion(){
     let question = Math.floor(Math.random() * riddlesContent.length);
     devilContent.text3.message = riddlesContent[question].question;
     devilContent.text3.answer = riddlesContent[question].answer;
-    console.log(question);
     riddlesContent.splice(question, 1);
-    if(canDare == true){
-        commandDare = {
+    // if(canDare == true){
+    //     commandDare = {
 
-        "*dare": (dare) => {
+    //     "*dare": (dare) => {
            
 
-            if(dare == "dare" || dare == "bear"){
-               annyang.removeCommands("*answer");
-               cleanup2();
-               makeText(dares[0]);
-               canDare = false;
-            }
-        }
-    }
+    //         if(dare == "dare" || dare == "bear"){
+                
+    //            annyang.removeCommands("*answer");
+    //            cleanup2();
+    //            makeText(dares[0]);
+    //            canDare = false;
+    //         }
+    //     }
+    // }
     
-    annyang.addCommands(commandDare);
+    // annyang.addCommands(commandDare);
 
-    }
+    // }
 
 }
 function cleanup(){
@@ -588,7 +1205,6 @@ function listener(){
 }
 function dare(dareRequest){
     if(dareRequest== "dare"){
-        alert("dare");
     }
 }
 
@@ -627,26 +1243,42 @@ function counted(answer){
 //     }
 // }
  let isMirror = false;
-
+let endMessage = "gg";
 function draw() {
-    background(0);
+    background(bgColour,0,0);
     if(isStart){
 
     }
     if(isPlay) {
-      
+        if(isRed == true){
+            makeRed();
+        }
         userInterface();
         runObjects();
         listener();
-        decreaseTimer();
-      
+        if(isTimeUp== false){
+            decreaseTimer();
+        }
+        
         console.log(timer);
+
+       
+       
         
         
         
     }
     if(isEnd){
-
+     push();
+     textAlign(CENTER);
+     textSize(60);
+     fill(255);
+     text("THE END",width/2, height/2-50);
+      textAlign(CENTER);
+      textSize(30);
+  
+      text(endMessage,width/2, height/2+100);
+      pop();
     }
 }
 

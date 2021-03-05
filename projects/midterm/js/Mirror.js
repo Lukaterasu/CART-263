@@ -12,6 +12,8 @@ class Mirror {
       this.isAppeared = false;
       this.startOpacity = 0;
       this.visible = true;
+      this.canFadeOut = false;
+      this.isFadeOut = false;
     
     
       if(this.size == undefined){
@@ -33,6 +35,9 @@ class Mirror {
         if(this.isAppeared == false){
             this.fadeIn();
           }
+        if(this.canFadeOut == true){
+          this.fadeOut();
+        }
           this.wiggleImage();
       }
     }
@@ -50,14 +55,30 @@ class Mirror {
   
     
     fadeIn(){
-
-        if(this.startOpacity <= 255 &&this.isAppeared == false){
+       
+        if(this.startOpacity < 255 &&this.isAppeared == false){
           this.startOpacity += 2; 
-        } else{
+        } else if(this.startOpacity >= 255){
           this.isAppeared = true;
         }
 
     }
+
+    // fadeOut(){
+
+    //   if(this.startOpacity > 0){
+    //     this.startOpacity = this.startOpacity - 2; 
+    //   } else if(this.startOpacity <= 0){
+          
+
+    //     this.canFadeOut = false;
+    //     this.visible = false;
+    //   }
+     
+
+     
+
+    // }
 
     wiggleImage(){
         this.x = random(this.originX-this.wiggle, this.originX+this.wiggle);

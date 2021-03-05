@@ -1,6 +1,6 @@
 class Text {
     
-    constructor(x, y, message, size, colour, wiggle, align, width, height, code, yes, no, fonction) {
+    constructor(x, y, message, size, colour, wiggle, align, width, height, code, yes, no, fonction, scary) {
       this.x = x;
       this.y = y;
       this.originX = x;
@@ -19,6 +19,8 @@ class Text {
       this.yes = yes;
       this.no = no;
       this.fonction = fonction;
+      this.scary = scary;
+      this.font = undefined
       this.isWritten = false;
       this.visible = true;
       this.hasEnded = false;
@@ -32,6 +34,12 @@ class Text {
       }
       if(this.wiggle == undefined){
         this.wiggle = "0";
+      }
+      if(this.scary == true){
+        this.font = fontScary;
+       
+      } else{
+        this.font = fontRegular;
       }
       
     }
@@ -52,6 +60,7 @@ class Text {
       push();
       textAlign(this.align);
       textSize(this.size);
+      textFont(this.font);
       fill(this.colour)
       text(this.currentMessage,this.x, this.y, this.width, this.height);
       pop();
