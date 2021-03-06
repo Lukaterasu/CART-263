@@ -1078,10 +1078,8 @@ function setup() {
     mirror.x = width/2;
     mirror.y = height/2 - 75;
     // start!
-    // makeButton(buttonContent.button1);
-    makeMirror(mirror.devil_normal, mirror.x, mirror.y, mirror.width, mirror.height, 0);
-
-    makeText(devilContent.text2);
+    makeButton(buttonContent.button1);
+ 
  
 }
 
@@ -1141,7 +1139,6 @@ if(endingBool.ending1 == true){
 
    
 }
-console.log(endingBool);
 
 }
 
