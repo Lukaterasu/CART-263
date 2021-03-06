@@ -75,3 +75,12 @@ function mouseClicked() {
     }
     
   }
+
+  
+function makeRed(){ 
+    bgColour+= 1;
+    bgColour = constrain(bgColour, 0, 200);
+    if(bgColour >= 200){
+        isRed = false;
+    }
+}

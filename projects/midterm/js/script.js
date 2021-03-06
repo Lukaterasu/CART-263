@@ -45,7 +45,6 @@ let isTime = false;
 // the shade of red i use
 let red = "#670000";
 // states of the game
-let isStart = false;
 let isPlay = true;
 let isEnd = false;
 // checks how many answers did the player get right, and which question he is at
@@ -68,7 +67,8 @@ let isRed = false;
 let bgColour = 0;
 // message to be displayed a the end
 let endMessage = "gg";
-
+// at one point, an imposter will appear in place of the user...
+let notImpostor;
 
 // loading all my images and fonts
 function preload(){
@@ -542,6 +542,8 @@ function setup() {
 
 
     }
+
+    // data for when the user responds "no"
     noContent = {
         no1: {
             x: width/4,
@@ -602,6 +604,8 @@ function setup() {
 
         }
     }
+
+    // determines the end result
     endingBool = {
         ending1: false,
         ending2: false,
@@ -610,6 +614,8 @@ function setup() {
         ending5: false,
         ending6: false
     }
+
+    // data for the ending
     endingContent = {
         ending1: {
             x: width/4,
@@ -977,7 +983,8 @@ function setup() {
         }
         
     }
-    let notImpostor;
+    
+    // data for the imposter ending
     impostorContent = {
         impostor1: {
             x: width/4,
@@ -1012,6 +1019,8 @@ function setup() {
 
         },
     }
+
+    // unfortunetely , I didnt have time to include more dares:(
     dares = [
         dare1 = {
             x: width/4,
@@ -1058,28 +1067,17 @@ function setup() {
         }
     ];
 
+
     mirror.x = width/2;
     mirror.y = height/2 - 75;
-   
+    // start!
     makeButton(buttonContent.button1);
  
-
-   
-   
-
-    
 }
 
 
 
-
-function makeRed(){ 
-    bgColour+= 1;
-    bgColour = constrain(bgColour, 0, 200);
-    if(bgColour >= 200){
-        isRed = false;
-    }
-}
+// controls the ending of the game
 function ending(){
     
 cleanup();
@@ -1136,6 +1134,7 @@ if(endingBool.ending1 == true){
 
 }
 
+// picks a new question from the riddle array
 function generateQuestion(){
     let question = Math.floor(Math.random() * riddlesContent.length);
     devilContent.text3.message = riddlesContent[question].question;
@@ -1143,39 +1142,32 @@ function generateQuestion(){
     riddlesContent.splice(question, 1);
 
 }
+
+// removes text from screen
 function cleanup(){
     texts.shift(); 
     options.shift();
     annyang.pause();
     annyang.removeCommands("*answer");
 }
+
+// same but doesnt pause annyang
 function cleanup2(){
     texts.shift(); 
     options.shift();
     annyang.removeCommands("*answer");
 }
-function listener(){
-    
 
-}
-function dare(dareRequest){
-    if(dareRequest== "dare"){
-    }
-}
-
+// responds to a yes / no question
 function yesNo(answer){
-
     if(answer == "yes"){
        texts[0].yes();
-
-
     } else if(answer == "no"){
         texts[0].no();
-
     }
-
 }
 
+// determines whether the user has summoned the devil
 function counted(answer){
     if(answer == "7 6 5 4 3 2 1" || answer == "won" || answer == "7 6 5 4 3 2 1 0"){
         cleanup();
@@ -1186,20 +1178,15 @@ function counted(answer){
         makeMirror(mirror.devil_normal, mirror.x, mirror.y, mirror.width, mirror.height, 0);
         isTime = true;
         setTimeout(() => makeText(devilContent.text1), 2000);
-        // annyang.start();
-       
-       
     } 
 
 }
 
-
-
+// :)
 function draw() {
     background(bgColour,0,0);
-    if(isStart){
-
-    }
+   
+    // this will activate depending on the ending
     if(isPlay) {
         if(isRed == true){
             makeRed();
@@ -1210,13 +1197,7 @@ function draw() {
         if(isTimeUp== false){
             decreaseTimer();
         }
-        
 
-       
-       
-        
-        
-        
     }
     if(isEnd){
      push();
@@ -1226,7 +1207,6 @@ function draw() {
      text("THE END",width/2, height/2-50);
       textAlign(CENTER);
       textSize(30);
-  
       text(endMessage,width/2, height/2+100);
       pop();
     }
