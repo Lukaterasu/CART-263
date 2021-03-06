@@ -70,6 +70,7 @@ let bgColour = 0;
 let endMessage = "gg";
 // at one point, an imposter will appear in place of the user...
 let notImpostor;
+let backgroundSound;
 
 // loading all my images and fonts
 function preload(){
@@ -88,6 +89,7 @@ function preload(){
     mirror.impostor_smile = loadImage('assets/images/mirror_impostor_smile.png');
     mirror.impostor_jumpscare = loadImage('assets/images/mirror_impostor_jumpscare.png');
     mirror.cracked = loadImage('assets/images/mirror_cracked.png');
+    backgroundSound = loadSound("assets/sounds/background.mp3");
 }
 
 // riddles and their answers (don't look)
@@ -121,6 +123,8 @@ function setup() {
         textAlign(CENTER);
         textFont(fontRegular);
     }
+    backgroundSound.play();
+	backgroundSound.setVolume(0.5);
     // these will indicate what the player can say
     optionsContent = {
         option1: {
