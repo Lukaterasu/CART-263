@@ -38,6 +38,7 @@ let dares = [
         
     }
 ];
+let fontRegular;
 // vatiables related to the timer
 let timer = 180;
 let isTimeUp = false;
