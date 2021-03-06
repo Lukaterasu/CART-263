@@ -124,7 +124,7 @@ function setup() {
         textFont(fontRegular);
     }
     backgroundSound.play();
-	backgroundSound.setVolume(0.5);
+	backgroundSound.setVolume(0.3);
     // these will indicate what the player can say
     optionsContent = {
         option1: {
