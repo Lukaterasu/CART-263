@@ -96,7 +96,7 @@ class Text {
                     this.currentMessage = this.currentMessage + this.characters[0];
                     this.characters.shift();
                     this.characterDelay = true;
-                    setTimeout(() => this.characterDelay = false , 40);
+                    setTimeout(() => this.characterDelay = false , 80);
                 }
                
             }

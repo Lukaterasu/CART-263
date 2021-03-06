@@ -66,6 +66,10 @@ let isImpostor = false;
 // variables to change background color
 let isRed = false;
 let bgColour = 0;
+// message to be displayed a the end
+let endMessage = "gg";
+
+
 // loading all my images and fonts
 function preload(){
     data = loadJSON("../assets/data/data.json");
@@ -88,23 +92,23 @@ function preload(){
 // riddles and their answers (don't look)
 let riddlesContent = [
     riddle1= {
-        question: "I’m tall when I’m young, and I’m short when I’m old. What am I?",
+        question: "'I’m tall when I’m young, and I’m short when I’m old. What am I?'",
         answer: ["a candle", "candle", "is it a candle"]
     },
     riddle2= {
-        question: "What is full of holes but still holds water?",
+        question: "'What is full of holes but still holds water?'",
         answer: ["a sponge", "sponge"]
     },
     riddle3= {
-        question: "What is always in front of you but can’t be seen?",
+        question: "'What is always in front of you but can’t be seen?'",
         answer: ["the future", "future"]
     },
     riddle4= {
-        question: "What can you keep after giving to someone?",
+        question: "'What can you keep after giving to someone?'",
         answer: ["word", "your word"]
     },
     riddle5= {
-        question: "The more of this there is, the less you see. What is it?",
+        question: "'The more of this there is, the less you see. What is it?'",
         answer: ["darkness", "the darkness", "the dark"]
     }
 ]
@@ -264,7 +268,7 @@ function setup() {
         },
         text2: {
             x: width/4,
-            y: height/3+125,
+            y: height/2,
             message: "Before beginning, some conditions have to be met. Do you have salt nearby?",
             size: 30,
             colour: red,
@@ -455,7 +459,7 @@ function setup() {
         text2: {
             x: width/4,
             y: height/2+300,
-            message: "Challenger... To win my game, you must simply answer 3 of my questions correctly...",
+            message: "'Challenger... To win my game, you must simply answer 3 of my questions correctly...'",
             size: 30,
             colour: red,
             wiggle: 1,
@@ -482,7 +486,7 @@ function setup() {
                 command1 = {
                     "*answer": function(userSaid){
                         console.log(userSaid);
-                    if((userSaid.toLowerCase() == "I choose dare" || userSaid.toLowerCase() == "I choose bear"|| userSaid.toLowerCase() == "I choose there")&&(canDare == true)){
+                    if((userSaid.toLowerCase() == "i choose dare" || userSaid.toLowerCase() == "i choose bear"|| userSaid.toLowerCase() == "i choose there")&&(canDare == true)){
                         answerCount = answerCount + 1;
                         annyang.removeCommands("*answer");
                         cleanup2();
@@ -541,7 +545,7 @@ function setup() {
     noContent = {
         no1: {
             x: width/4,
-            y: height/3+125,
+            y: height/2,
             message: "Salt will be your only way to restrain the Devil. At the very least, it won't make it easy for him to get to you. ",
             size: 30,
             colour: red,
@@ -556,7 +560,7 @@ function setup() {
         },
         no2: {
             x: width/4,
-            y: height/3+100,
+            y: height/2,
             message: "Remove any religious accessory. They will NOT protect you.",
             size: 30,
             colour: red,
@@ -571,7 +575,7 @@ function setup() {
         },
         no3: {
             x: width/4,
-            y: height/3+100,
+            y: height/2,
             message: "Bringing any device while meeting with the Devil is forbidden. Leave it outside the room.",
             size: 30,
             colour: red,
@@ -585,7 +589,7 @@ function setup() {
         },
         no4: {
             x: width/4,
-            y: height/3+100,
+            y: height/2,
             message: "The Devil won’t show up unless you are alone in the room.",
             size: 30,
             colour: red,
@@ -1057,10 +1061,8 @@ function setup() {
     mirror.x = width/2;
     mirror.y = height/2 - 75;
    
-    // makeButton(buttonContent.button1);
-    makeText(textContent.text5);
-    // makeMirror(mirror.devil_normal, mirror.x, mirror.y, mirror.width, mirror.height, 0);
-    // makeText(devilContent.text1);
+    makeButton(buttonContent.button1);
+ 
 
    
    
@@ -1191,13 +1193,8 @@ function counted(answer){
 
 }
 
-// function displayOptions(code){
-//     if(code == 1){
-//         makeOption(optionsContent.option1);
-//     }
-// }
- let isMirror = false;
-let endMessage = "gg";
+
+
 function draw() {
     background(bgColour,0,0);
     if(isStart){

@@ -64,22 +64,6 @@ class Mirror {
 
     }
 
-    // fadeOut(){
-
-    //   if(this.startOpacity > 0){
-    //     this.startOpacity = this.startOpacity - 2; 
-    //   } else if(this.startOpacity <= 0){
-          
-
-    //     this.canFadeOut = false;
-    //     this.visible = false;
-    //   }
-     
-
-     
-
-    // }
-
     wiggleImage(){
         this.x = random(this.originX-this.wiggle, this.originX+this.wiggle);
         this.y = random(this.originY-this.wiggle, this.originY+this.wiggle);
