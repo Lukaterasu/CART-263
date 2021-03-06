@@ -1135,7 +1135,7 @@ if(endingBool.ending1 == true){
     setTimeout(()=>{  makeMirror(mirror.devil_jumpscare, mirror.x, mirror.y, mirror.width, mirror.height, 0);}, 5000);
     setTimeout(()=>{   isRed=true;}, 7000);
     setTimeout(()=>{   isPlay = false;
-    isEnd = true;}, 10000);
+    isEnd = true;}, 12000);
 
    
 
