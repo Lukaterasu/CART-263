@@ -1,3 +1,5 @@
+
+// i created a set way to create text, images, and buttons.
 function makeText({x, y, message, size, colour, wiggle, align, width, height, code, yes, no, fonction,scary}){
     let text = new Text(x, y, message, size, colour, wiggle, align, width, height, code, yes, no, fonction, scary);
     texts.push(text);
@@ -17,7 +19,6 @@ function userInterface(){
     push();
     textAlign(CENTER, CENTER);
     fill(255);
-    // text("hello", width/2, height/2);
     pop();
 }
 
@@ -76,7 +77,7 @@ function mouseClicked() {
     
   }
 
-  
+//makes background red
 function makeRed(){ 
     bgColour+= 1;
     bgColour = constrain(bgColour, 0, 200);

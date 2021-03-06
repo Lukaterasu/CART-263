@@ -72,21 +72,21 @@ let notImpostor;
 
 // loading all my images and fonts
 function preload(){
-    data = loadJSON("../assets/data/data.json");
-    fontRegular = loadFont('assets/century.ttf');
-    fontScary = loadFont('assets/onryou.ttf');
-    mirror.sprite = loadImage('assets/images/mirror_empty.png');
-    mirror.yourself_normal = loadImage('assets/images/mirror_yourself_normal.png');
-    mirror.yourself_happy = loadImage('assets/images/mirror_yourself_happy.png');
-    mirror.yourself_old = loadImage('assets/images/mirror_yourself_old.png');
-    mirror.devil_normal = loadImage('assets/images/mirror_devil_normal.png');
-    mirror.devil_behind = loadImage('assets/images/mirror_devil_behind.png');
-    mirror.devil_smile = loadImage('assets/images/mirror_devil_smile.png');
-    mirror.devil_jumpscare = loadImage('assets/images/mirror_devil_jumpscare.png');
-    mirror.impostor_normal = loadImage('assets/images/mirror_impostor_normal.png');
-    mirror.impostor_smile = loadImage('assets/images/mirror_impostor_smile.png');
-    mirror.impostor_jumpscare = loadImage('assets/images/mirror_impostor_jumpscare.png');
-    mirror.cracked = loadImage('assets/images/mirror_cracked.png');
+    // data = loadJSON("assets/data/data.json");
+    // fontRegular = loadFont('assets/century.TTF');
+    // fontScary = loadFont('assets/onryou.TTF');
+    // mirror.sprite = loadImage('assets/images/mirror_empty.png');
+    // mirror.yourself_normal = loadImage('assets/images/mirror_yourself_normal.png');
+    // mirror.yourself_happy = loadImage('assets/images/mirror_yourself_happy.png');
+    // mirror.yourself_old = loadImage('assets/images/mirror_yourself_old.png');
+    // mirror.devil_normal = loadImage('assets/images/mirror_devil_normal.png');
+    // mirror.devil_behind = loadImage('assets/images/mirror_devil_behind.png');
+    // mirror.devil_smile = loadImage('assets/images/mirror_devil_smile.png');
+    // mirror.devil_jumpscare = loadImage('assets/images/mirror_devil_jumpscare.png');
+    // mirror.impostor_normal = loadImage('assets/images/mirror_impostor_normal.png');
+    // mirror.impostor_smile = loadImage('assets/images/mirror_impostor_smile.png');
+    // mirror.impostor_jumpscare = loadImage('assets/images/mirror_impostor_jumpscare.png');
+    // mirror.cracked = loadImage('assets/images/mirror_cracked.png');
 }
 
 // riddles and their answers (don't look)
@@ -1193,7 +1193,7 @@ function draw() {
         }
         userInterface();
         runObjects();
-        listener();
+       
         if(isTimeUp== false){
             decreaseTimer();
         }
