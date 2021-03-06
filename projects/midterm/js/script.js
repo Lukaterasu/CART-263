@@ -1077,7 +1077,7 @@ function setup() {
 
     mirror.x = width/2;
     mirror.y = height/2 - 75;
-    // start!
+
     makeButton(buttonContent.button1);
  
  
