@@ -71,6 +71,8 @@ let endMessage = "gg";
 // at one point, an imposter will appear in place of the user...
 let notImpostor;
 let backgroundSound;
+let didDare = false;
+
 
 // loading all my images and fonts
 function preload(){
@@ -124,7 +126,7 @@ function setup() {
         textFont(fontRegular);
     }
     backgroundSound.play();
-	backgroundSound.setVolume(0.3);
+	backgroundSound.setVolume(0.5);
     // these will indicate what the player can say
     optionsContent = {
         option1: {
@@ -1041,6 +1043,7 @@ function setup() {
                        
                         if(answer.toLowerCase() == "yes"){
                             endingBool.ending6 = true;
+                            didDare = true;
                             ending();
                      
                          } else if(answer.toLowerCase() == "no"){
@@ -1072,11 +1075,13 @@ function setup() {
         }
     ];
 
-
     mirror.x = width/2;
     mirror.y = height/2 - 75;
     // start!
-    makeButton(buttonContent.button1);
+    // makeButton(buttonContent.button1);
+    makeMirror(mirror.devil_normal, mirror.x, mirror.y, mirror.width, mirror.height, 0);
+
+    makeText(devilContent.text2);
  
 }
 
@@ -1086,7 +1091,7 @@ function setup() {
 function ending(){
     
 cleanup();
-if(chances == 3 && answerCount>1){
+if(chances == 3 && answerCount>1 && didDare == false){
     endingBool.ending1 = true;
    
 } else if((chances==2 || answerCount <= 1)&& endingBool.ending6 == false){
@@ -1136,6 +1141,7 @@ if(endingBool.ending1 == true){
 
    
 }
+console.log(endingBool);
 
 }
 
