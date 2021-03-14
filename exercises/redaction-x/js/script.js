@@ -1,16 +1,14 @@
-// let $ps = $("p");
+// vatiables
 let red = "#8b0000";
 let black = "#000000";
 let rectWidth = 0;
+
+//activate listener 
 $("p").each(function( index ) {
-    // console.log( index + ": " + $( this ).text() );
     $(this).on("click", clickable);
-      
-  
   });
 
-
-
+  //blocks text and fills gauge
   function clickable(){
     $(this).css("color", red);
     $(this).css("background-color", red);
