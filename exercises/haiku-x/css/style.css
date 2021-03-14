@@ -1,0 +1,83 @@
+body {
+  padding: 0;
+  margin: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: black;
+  color: darkred;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+*{
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+section{
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+  font-size: 2em;
+}
+h3{
+  font-size: 2em;
+}
+p{
+  cursor: pointer;
+  transition-duration: 0.2s;
+}
+
+.heading{
+  margin-bottom: 100px;
+  
+}
+
+.fadeOut{
+  animation: out 2s ease-in forwards;
+} 
+.fadeIn{
+  animation: in 2s ease-in forwards;
+} 
+
+
+@keyframes out{
+  
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  
+}
+
+@keyframes in{
+  
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+
+}
+
+.shake{
+  animation: .8s shake infinite alternate;
+}
+@keyframes shake {
+  0% { transform: skewX(-15deg); }
+  5% { transform: skewX(15deg); }
+  10% { transform: skewX(-15deg); }
+  15% { transform: skewX(15deg); }
+  20% { transform: skewX(0deg); }
+  100% { transform: skewX(0deg); }  
+}
+
+p:hover{
+  color: white;
+}
