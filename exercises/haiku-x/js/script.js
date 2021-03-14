@@ -2,7 +2,7 @@
 //I recoded everything to find a more effective program
 
 
-let poems = ["one","two","three","four","five", "six"];
+let poems = ["We all go a little mad sometimes.","Walls have ears. Doors have eyes.","Every day is Halloween, isn't it? For some of us.","Sometimes the things in our heads are far worse than anything they could put in books or on film.","Is evil something you are? Or is it something you do?", "I don’t live in darkness, darkness lives in me."];
 
 let ps = document.querySelectorAll("p");
 
