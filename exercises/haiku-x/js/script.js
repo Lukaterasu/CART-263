@@ -1,4 +1,7 @@
 
+//I recoded everything to find a more effective program
+
+
 let poems = ["one","two","three","four","five", "six"];
 
 let ps = document.querySelectorAll("p");
