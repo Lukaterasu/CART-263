@@ -1,9 +1,19 @@
+:root {
+  --red: #C70025;
+  --black: #121420;
+  --white: #F2F4F3;
+}
+
+
 body {
   padding: 0;
   margin: 0;
   width: 100vw;
   height: 100vh;
   display: flex;
+  background-color: var(--black);
+  color: var(--white);
+  font-family: 'Pangolin', cursive;
   justify-content: center;
   align-items: center;
   user-select: none;  
@@ -15,33 +25,14 @@ body {
 }
 
 section{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 65vw;
-  height: 85vh;
-  font-size: 1.25em;
+  border : 3px solid white;
+  height: 864px;
+  width: 1536px;
+  display: grid;
+ 
+ 
+ 
 }
 
-h1, h4, h3{
-  color: darkred;
-}
-p{
-  cursor: pointer;
-}
-.rect{
-  width: 300px;
-  height: 10px;
-  background-color: black;
-  position: relative;
+/* 24 x 16 */
 
-}
-.top-rect{
-  width: 0px;
-  height: 10px;
-  background-color: darkred;
-  position: absolute;
-  top: 0;
-  z-index: 10;
-
-}

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Exorcism</title>
+  <script
+  src="https://code.jquery.com/jquery-3.6.0.min.js"
+  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+  crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+  integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+  crossorigin="anonymous"></script>
+  <script type="text/javascript" src="assets/data/data.json"></script>
+  <!-- CSS stylesheet(s) -->
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Pangolin&display=swap" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="css/style.css" />
+  
+
+
+</head>
+
+<body>
+<!-- HTML would go here if needed. -->
+  <section class="SC bordered">
+<!-- YOU -->
+<img class="SC_background_image" src="assets/images/SC_background.png" alt="">
+    <div class="SC_you">
+      <p>YOU</p>
+    </div>
+<!-- sprites! -->
+    <div class="SC_player_sprite">
+      <img src="assets/images/sprites/player.png" alt="">
+    </div>
+    <div class="SC_enemy_sprite">
+      <img src="assets/images/sprites/brahms.png" alt="">
+    </div>
+<!-- player stats -->
+    <div class="SC_player_stats bordered">
+      <div class="SC_player_health SC_stat">
+        <p>Health:</p>
+      </div>
+      <div class="SC_player_energy SC_stat">
+        <p>Energy:</p>
+      </div>
+      <div class="SC_player_artifacts SC_stat">
+        <p>Artifacts (0)</p>
+      </div>
+    </div>
+<!-- deck buttons -->
+    <div class="SC_draw_pile bordered SC_pile">
+      <p>Draw(0)</p>
+    </div>
+    <div class="SC_draw_pile_full">
+      <ul></ul>
+    </div>
+    <div class="SC_discard_pile bordered SC_pile">
+      <p>Discard(0)</p>
+    </div>
+    <div class="SC_discard_pile_full">
+      <ul></ul>
+    </div>
+    <div class="SC_view_deck bordered SC_pile">
+      <p>View deck</p>
+    </div>
+    <div class="SC_view_deck_full">
+      <ul></ul>
+    </div>
+<!-- main text / interaction -->
+    <div class="SC_main_box">
+      <!-- <div class="card card_1"><p>Purify</p> <img src="assets/images/cards/card1.png"><p>1</p></div>
+      <div class="card card_1"><p>Prayer</p><img src="assets/images/cards/card2.png"><p>1</p></div> -->
+    </div>
+<!-- end button -->
+    <div class="SC_end_button bordered">
+      <p>End turn</p>
+    </div>
+<!-- ennemy health bar -->
+    <div class="SC_enemy_health bordered">
+      <p></p>
+    </div>
+
+  </section>
+
+  <script type="text/javascript" src="js/script.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,227 @@
+:root {
+  --red: #C70025;
+  --black: #121420;
+  --white: #F2F4F3;
+  --white-border:3px solid var(--white);
+
+  --smallFont: 20px;
+  --mediumFont: 12px;
+
+}
+
+
+body {
+  padding: 0;
+  margin: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  background-color: var(--black);
+  color: var(--white);
+  font-family: 'Pangolin';
+  letter-spacing: 1px;
+  justify-content: center;
+  align-items: center;
+  user-select: none;  
+  
+}
+
+*{
+  overflow: hidden;
+  box-sizing: border-box;
+}
+ul{
+  padding: 0;
+}
+p, li{
+  font-size: var(--smallFont);
+}
+
+.bordered{
+  border : var(--white-border);
+}
+
+.SC{
+  height: 864px;
+  width: 1536px;
+  display: grid;
+  grid: repeat(16, 1fr) / repeat(24, 1fr);
+  grid-gap: 10px;
+  
+ 
+}
+
+.SC_background_image{
+  margin-top: -140px;
+  
+  
+}
+.SC_you{
+  grid-area: 13 / 3 / span 1 / span 2;
+  background-color: var(--black);
+  border : var(--white-border);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: rotate(-15deg);
+}
+
+.SC_player_sprite{
+  /* background-image: url("../assets/images/sprites/player.png"); */
+  grid-area: 4 / 5 / span 9 / span 6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.SC_player_sprite img{
+ transform: scale(1.2);
+ 
+}
+
+.SC_enemy_sprite{
+  grid-area: 4 / 15 / span 9 / span 6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.SC_player_stats{
+  grid-area: 13 / 4 / span 3 / span 4;
+  display: grid;
+  grid: repeat(3, 1fr) / repeat(1, 1fr);
+  /* border-radius: 5px; */
+}
+
+.SC_stat{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: var(--white-border);
+  background-color: var(--black);
+}
+
+.SC_stat:nth-child(3) {
+  border-bottom: none;
+}
+
+.SC_pile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--black);
+}
+.SC_pile:hover{
+  background-color: var(--red);
+  cursor: pointer;
+}
+
+.SC_player_health{
+  grid-area: 1 / 1 / span 1 / span 1;
+}
+.SC_player_energy{
+  grid-area: 2 / 1 / span 1 / span 1;
+}
+
+.SC_draw_pile{
+  grid-area: 13 / 8 / span 1 / span 2;
+  
+}
+.SC_draw_pile_full{
+  display: none;
+  grid-area: 3 / 8 / span 10 / span 5;
+  z-index: 1;
+  border: var(--white-border);
+  background-color: var(--black);
+}
+.SC_discard_pile{
+  grid-area: 14 / 8 / span 1 / span 2;
+ 
+}
+.SC_discard_pile_full{
+  display: none;
+  grid-area: 4 / 8 / span 10 / span 5;
+  z-index: 1;
+  border: var(--white-border);
+  background-color: var(--black);
+}
+
+.SC_view_deck {
+  grid-area: 15 / 8 / span 1 / span 2;
+}
+
+.SC_view_deck_full {
+  display: none;
+  grid-area: 5 / 8 / span 10 / span 5;
+  z-index: 1;
+  border: var(--white-border);
+  background-color: var(--black);
+}
+
+.SC ul{
+padding-left: 15px;
+}
+
+.SC_main_box{
+  grid-area: 13 / 11 / span 3 / span 12;
+  border : 3px dashed var(--white);
+  /* overflow: hidden; */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  
+}
+.SC_end_button{
+  grid-area: 12 / 21 / span 1 / span 2;
+  background-color: var(--black);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.SC_end_button:hover{
+  background-color: var(--red);
+  cursor: pointer;
+}
+
+.SC_enemy_health{
+  grid-area: 2 / 8 / span 1 / span 10;
+  background-color: var(--red);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card{
+  background-color: #181a2a;
+  border: var(--white-border);
+  height: 130px;
+  width: 100px;
+  margin: 5px;
+  display: flex;
+      flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  
+}
+.card:hover{
+  background-color:var(--red);
+  cursor: pointer;
+}
+.card p{
+    position: absolute;
+}
+
+.card p:nth-child(1){
+  top:0;
+  margin: 5px;
+}
+.card p:last-child{
+  bottom: 0;
+  margin: 5px;
+
+}
+.card img{
+  
+  transform: scale(0.4);
+}
