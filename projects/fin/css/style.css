@@ -68,7 +68,6 @@ p, li{
 }
 
 .SC_player_sprite{
-  /* background-image: url("../assets/images/sprites/player.png"); */
   grid-area: 4 / 5 / span 9 / span 6;
   display: flex;
   justify-content: center;
