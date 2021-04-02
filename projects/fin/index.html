@@ -6,8 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Exorcism</title>
-  <script
-  src="https://code.jquery.com/jquery-3.6.0.min.js"
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Pangolin&display=swap" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="css/style.css" />
+  <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
   integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
   crossorigin="anonymous"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
@@ -15,9 +18,9 @@
   crossorigin="anonymous"></script>
   <script type="text/javascript" src="assets/data/data.json"></script>
   <!-- CSS stylesheet(s) -->
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Pangolin&display=swap" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="css/style.css" />
+  
+  
+  
   
 
 
@@ -37,6 +40,10 @@
     </div>
     <div class="SC_enemy_sprite">
       <img src="assets/images/sprites/brahms.png" alt="">
+    </div>
+    <div class="SC_block">
+      <img src="assets/images/shield.png" alt="">
+      <h3>0</h3>
     </div>
 <!-- player stats -->
     <div class="SC_player_stats bordered">
@@ -71,8 +78,6 @@
     </div>
 <!-- main text / interaction -->
     <div class="SC_main_box">
-      <!-- <div class="card card_1"><p>Purify</p> <img src="assets/images/cards/card1.png"><p>1</p></div>
-      <div class="card card_1"><p>Prayer</p><img src="assets/images/cards/card2.png"><p>1</p></div> -->
     </div>
 <!-- end button -->
     <div class="SC_end_button bordered">
@@ -84,7 +89,7 @@
     </div>
 
   </section>
-
+  <script type="text/javascript" src="js/combat.js"></script>
   <script type="text/javascript" src="js/script.js"></script>
 
 </body>

@@ -11,7 +11,7 @@ let player = {
     dexterity: 0,
     block: 0,
     energy: 3,
-    draw: 2,
+    draw: 3,
     artifacts: 0,
     gold: 100,
 };
@@ -27,27 +27,8 @@ let current_ennemy = ennemy_Brahms;
 let permanent_deck = [];
 let temporary_deck = [];
 let discard_pile = [];
-let card_1 = {
-    name: "Purify",
-    energy: 1,
-    image: "assets/images/cards/card1.png",
-    description: "Deal 6 damage.",
-    effect: undefined,
-}
-let card_2 = {
-    name: "Protection",
-    energy: 1,
-    image:"assets/images/cards/card2.png",
-    description: "Gain 5 block.",
-    effect: undefined,
-}
-let card_3 = {
-    name: "Exorcise",
-    energy: 1,
-    image:"assets/images/cards/card3.png",
-    description: "Deal 8 damage. Apply 2 despair.",
-    effect: undefined,
-}
+let active_cards = [];
+
 
 permanent_deck.push(card_1);
 permanent_deck.push(card_2);
@@ -62,6 +43,7 @@ permanent_deck.push(card_3);
 let ennemy_decks = [];
 
 start_combat();
+// card_1.effect(current_ennemy);
 
 function start_combat(){
     temporary_deck = permanent_deck.slice();
@@ -91,7 +73,7 @@ function start_combat(){
 }
 function start_turn(){
     generate_cards();
-    
+
 }
 
 function update_UI(){
@@ -100,6 +82,13 @@ function update_UI(){
     $(".SC_player_energy p").text("Energy: "+ player.energy);
     $(".SC_player_artifacts p").text("Artifacts("+ player.artifacts+")");
     $(".SC_draw_pile p").text("Draw("+ (temporary_deck.length)+")");
+    $(".SC_discard_pile p").text("Discard("+ (discard_pile.length)+")");
+    $(".SC_block h3").text(player.block);
+    if(player.block == 0){
+        $(".SC_block").hide();
+    } else {
+        $(".SC_block").show();
+    }
 
 
 }
@@ -107,17 +96,26 @@ function update_UI(){
 function end_turn(){
 
 }
+
 function generate_cards(){
-    // $( ".SC_main_box" ).append( "<p>Test</p>" );
     for (let i = 0; i < player.draw; i++) {
-        
-        $( ".SC_main_box" ).append( "<div class='card'><p>"+ temporary_deck[0].name+ "</p> <img src='"+ temporary_deck[0].image +"'><p>"+ temporary_deck[0].energy+"</p></div>" );
-        discard_pile.push(temporary_deck[0].name);
+        active_cards.push(temporary_deck[0]);
+        $( ".SC_main_box" ).append( "<div class='card'><p>"+ active_cards[i].name+ "</p> <img src='"+ active_cards[i].image +"'><p>"+ active_cards[i].energy+"</p></div>" );
+      
+        $( ".card:eq("+ i +")" ).on( "click", function() {
+            active_cards[i].effect(current_ennemy);
+            $(this).fadeOut();
+            discard_pile.push(active_cards[i]);
+            update_UI();
+          });
+
         temporary_deck.shift();
     }
+
     
 
 }
+
 function shuffleDeck(array) {
    array = array.sort(() => Math.random() - 0.5)
 }

@@ -29,6 +29,7 @@ body {
 *{
   overflow: hidden;
   box-sizing: border-box;
+  transition: 0.2s;
 }
 ul{
   padding: 0;
@@ -85,11 +86,28 @@ p, li{
   align-items: center;
 }
 
+.SC_block{
+  grid-area: 7 / 4 / span 3 / span 3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+.SC_block img{
+  transform: scale(0.6);
+}
+
+.SC_block h3{
+  position: absolute;
+  font-size: 48px;
+  color: var(--black);
+}
+
 .SC_player_stats{
   grid-area: 13 / 4 / span 3 / span 4;
   display: grid;
   grid: repeat(3, 1fr) / repeat(1, 1fr);
-  /* border-radius: 5px; */
+
 }
 
 .SC_stat{
