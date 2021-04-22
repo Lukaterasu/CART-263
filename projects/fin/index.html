@@ -6,10 +6,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Exorcism</title>
+ 
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Pangolin&display=swap" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="css/style.css" />
   <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"
   integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
   crossorigin="anonymous"></script>
@@ -28,9 +30,18 @@
 
 <body>
 <!-- HTML would go here if needed. -->
-<div id="dialog" title="Notice">
+<!-- <div id="dialog" title="Notice">
   <p>In my prototype, I have nearly completed the user interface and card drawing functions required for combat. You may currently play cards and view your deck. Most of my time spent was in CSS, trying to create the perfect interface design.</p>
-</div>
+</div> -->
+    <section class="VT bordered">
+     
+      <div class="VT_victory_title">Victory!</div>
+      <div class="VT_victory_message">Pick one card to add to your deck!</div>
+      <div class="VT_new_card bordered"></div>
+      <div class="VT_new_card bordered"></div>
+      <div class="VT_new_card bordered"></div>
+   
+    </section>
   <section class="SC bordered">
 <!-- YOU -->
 <img class="SC_background_image" src="assets/images/SC_background.png" alt="">
@@ -39,21 +50,49 @@
     </div>
 <!-- sprites! -->
     <div class="SC_player_sprite">
-      <img src="assets/images/sprites/player.png" alt="">
+      <img src="assets/images/sprites/player_gif.gif" alt="">
     </div>
     <div class="SC_enemy_sprite">
-      <img src="assets/images/sprites/brahms.png" alt="">
+      <img src="" alt="">
     </div>
-    <div class="SC_block">
+    <div class="SC_player_block">
       <img src="assets/images/shield.png" alt="">
       <h3>0</h3>
     </div>
+    <div class="SC_enemy_block">
+      <img src="assets/images/red_shield.png" alt="">
+      <h3>0</h3>
+    </div>
+  <!-- decsription box -->
+<div class="SC_description_box bordered"></div>
+<!-- damage markers -->
+<div class="SC_player_damage_marker">-5</div>
+<div class="SC_enemy_damage_marker">-8</div>
+<!-- status markers -->
+<div class="SC_player_status_marker">weak</div>
+<div class="SC_enemy_status_marker">weak</div>
+
+<!-- weak and vulnerable counters -->
+    <div class="SC_player_status">
+      <p>Status</p>
+      <img src="assets/images/skull.png" width="25" height="25" alt="">
+    </div>
+    <div class="SC_player_status_window bordered"></div>
+
+    <div class="SC_enemy_status">
+      <p>Status</p>
+      <img src="assets/images/skull_red.png" width="25" height="25" alt="">
+    </div>
+    <div class="SC_enemy_status_window bordered"></div>
 <!-- player stats -->
     <div class="SC_player_stats bordered">
       <div class="SC_player_health SC_stat">
+       <div class="SC_health_bar"></div>
         <p>Health:</p>
+       
       </div>
       <div class="SC_player_energy SC_stat">
+        <div class="SC_energy_bar"></div>
         <p>Energy:</p>
       </div>
       <div class="SC_player_artifacts SC_stat">
@@ -81,16 +120,23 @@
     </div>
 <!-- main text / interaction -->
     <div class="SC_main_box">
+      <div class="SC_main_overlay"> <p class="SC_main_text">Sample Text</p> 
+      <p class="SC_continue">(Click to continue)</p></div>
     </div>
+    <p class="SC_turn">YOUR TURN</p>
 <!-- end button -->
     <div class="SC_end_button bordered">
       <p>End turn</p>
     </div>
 <!-- ennemy health bar -->
     <div class="SC_enemy_health bordered">
+      <div class="SC_enemy_bar"></div>
       <p></p>
     </div>
 
+  </section>
+  <section class="TR bordered">
+    <h3>Combat</h3>
   </section>
   <script type="text/javascript" src="js/combat.js"></script>
   <script type="text/javascript" src="js/script.js"></script>
