@@ -59,6 +59,33 @@ p, li{
   font-family: 'Pangolin', cursive;
   font-size: 48px;
 }
+.PG{
+  height: 864px;
+  width: 1536px;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  
+}
+.PG h3{
+  font-family: 'Pangolin', cursive;
+  font-size: 48px;
+  margin-top: -30px;
+  padding: 30px;
+
+  
+}
+.PG_progress{
+  height: 20px;
+  width: 1000px;
+  border-radius: 15px;
+}
+.PG_progress_bar{
+  background-color: var(--white);
+  height: 100%;
+  width: 75%;
+}
 .VT{
   height: 864px;
   width: 1536px;

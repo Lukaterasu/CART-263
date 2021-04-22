@@ -19,48 +19,12 @@ let player = {
     energy: 3,
     draw: 3,
     artifacts: 0,
+    poisoned: 0,
 };
 let weak_modifier = 0.75;
 let vulnerable_modifier = 1.5;
 // Classical enemy object properties.
-let ennemy_Brahms = {
-    name: "Brahms",
-    health: 40,
-    max_health: 40,
-    strength: 0,
-    block: 0,
-    weak: 0,
-    vulnerable: 0,
-    intro: "Brahms is a mentally unstable killer. You must take him down.",
-    intent: undefined,
-    intent_choices: ["attack", "defend", "buff"],
-    attack_phrase: ["Brahms intends to attack next turn.", "Brahms lunges at you."], 
-    defend_phrase: ["Brahms intends to defend next turn.", "Brahms adopts a defensive position."],
-    buff_phrase: ["Brahms intends to power up next turn.", "Brahms channels a mysterious dark energy. His power seems to have increased."],
-    attack_damage: 8,
-    defense_value: 8,
-    attack:()=>{
-        ennemy_attack();
-        
 
-    },
-    defend: ()=>{
-        enemy_defend();
-    },
-    buff: ()=>{
-        $(".SC_main_text").text(current_ennemy.buff_phrase[1]);
-        $(".SC_continue").hide();
-        setTimeout(()=>{
-            current_ennemy.attack_damage += 3;
-            status_marker("enemy", "Strength Up");
-            update_UI();  
-            setTimeout(()=>{
-                $(".SC_continue").show();
-                end_enemy_turn();
-            }, 1000);
-        }, 2000)
-    }
-}
 // My arrays.
 let permanent_deck = [];
 let temporary_deck = [];
@@ -83,7 +47,7 @@ let intentNumber;
 
 // Initilatizing an enemmy.
 // Initializing a scene.
-start_combat(enemies[1]);
+start_combat(enemies[2]);
 
 function enemy_damage_calc(damage){
     if(current_ennemy.weak > 0){
@@ -400,6 +364,7 @@ function end_turn(){
     });
     let skip=false;
     for (let i = 0; i < active_cards.length; i++) {
+        skip= false;
        for (let e = 0; e < used_cards.length; e++) {
            if(used_cards[e] == i){
                skip = true;
@@ -421,6 +386,10 @@ function end_turn(){
     }
     if(player.vulnerable >0){
         player.vulnerable -= 1;
+    }
+    if(player.poisoned > 0){
+        status_marker("player", ["-2", "Poisoned"])
+        block_calc(player, player.poisoned);
     }
     update_UI();
 }
@@ -521,7 +490,27 @@ function display_overlay(){
 }
 
 function scene_transition(){
-    $( ".TR" ).fadeOut(2000, ()=>{
+    if(current_ennemy.name == "Slenderman"){
+        $( ".TR" ).fadeOut(2000, ()=>{
+       
+
+            $(".SC_main_overlay").on("click", ()=>{
+                $(".SC_main_text").text(current_ennemy.intro2);
+                $(".SC_main_overlay").on("click", ()=>{
+                    
+                    $(".SC_main_overlay").off();
+                    start_turn();
+                   
+                });
+    
+              
+               
+            });
+    
+       
+    });
+    } else{
+        $( ".TR" ).fadeOut(2000, ()=>{
 
             $(".SC_main_overlay").on("click", ()=>{
                 $(".SC_main_overlay").off();
@@ -531,6 +520,9 @@ function scene_transition(){
 
        
     });
+    }
+    
+    
 
 }
 
