@@ -1,3 +1,4 @@
+// card[]: list of all cards and their properties.
 let cards = [
 
    card_0 = {
@@ -18,7 +19,7 @@ let cards = [
     description: "Gain 5 block.",
     effect:  (enemy) => {
 
-        player.block += 5 + dexterity;
+        player.block += 5 + player.dexterity;
         update_UI();
       },
 },
@@ -32,7 +33,7 @@ let cards = [
     effect:  (enemy) => {
         attack("enemy", (4+ player.strength));
         player.block += 4 + player.dexterity;
-        status_marker("enemy", "Weak");
+        status_marker("enemy", ["Weak"]);
         enemy.weak += 1;
         update_UI();
       },
@@ -156,13 +157,12 @@ card_11 = {
 },
 
 ]
+// enemies[]: array of all enemies and their properties.
 let enemies = [
-
-  
   {
   name: "Poltergeist",
   source: "assets/images/sprites/poltergeist_gif.gif",
-  health: 1,
+  health: 25,
   max_health: 25,
   block: 0,
   weak: 0,
@@ -178,7 +178,6 @@ let enemies = [
       ennemy_attack();
   },
   debuff: ()=>{
-
       $(".SC_main_text").text(current_ennemy.debuff_phrase[1]);
       $(".SC_continue").hide();
       setTimeout(()=>{
@@ -191,11 +190,11 @@ let enemies = [
           }, 1000);
       }, 2000)
   }
-},
+ },
   {
   name: "Possessed",
   source: "assets/images/sprites/possessed_gif.gif",
-  health: 1,
+  health: 40,
   max_health: 40,
   block: 0,
   weak: 0,
@@ -210,8 +209,6 @@ let enemies = [
   defense_value: 8,
   attack:()=>{
       ennemy_attack();
-      
-
   },
   defend: ()=>{
       enemy_defend();
@@ -233,7 +230,7 @@ let enemies = [
  {
   name: "Brahms",
   source: "assets/images/sprites/brahms_gif.gif",
-  health: 1,
+  health: 80,
   max_health: 80,
   block: 0,
   weak: 0,
@@ -248,8 +245,6 @@ let enemies = [
   defense_value: 8,
   attack:()=>{
       ennemy_attack();
-      
-
   },
   defend: ()=>{
       enemy_defend();
@@ -271,8 +266,8 @@ let enemies = [
  {
   name: "Slenderman",
   source: "assets/images/sprites/slenderman_gif.gif",
-  health: 1,
-  max_health: 150,
+  health: 100,
+  max_health: 100,
   block: 0,
   weak: 0,
   vulnerable: 0,
@@ -286,10 +281,7 @@ let enemies = [
   attack_damage: 12,
   defense_value: 15,
   attack:()=>{
-
       ennemy_attack();
-      
-
   },
   defend: ()=>{
       enemy_defend();
