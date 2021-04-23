@@ -552,7 +552,7 @@ function end_enemy_turn(){
     start_turn()
 }
 // ================================================ CALCULATION FUNCTIONS =====================================================
-// getRandomIntInclusive(): simply generates a random number between two numbers.
+// getRandomIntInclusive(): simply generates a random number between two numbers. FOUND ON STACK OVERFLOW.
 function getRandomIntInclusive(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
