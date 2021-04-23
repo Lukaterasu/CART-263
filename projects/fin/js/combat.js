@@ -7,7 +7,7 @@ let cards = [
     base_damage: 5,
     description: "Deal 5 damage.",
     effect: (enemy) => {
-       attack("enemy", (card_1.base_damage + player.strength)); 
+       attack("enemy", (cards[0].base_damage + player.strength)); 
     },
 },
  card_1 = {
@@ -159,10 +159,10 @@ card_11 = {
 let enemies = [
 
   
-ennemy_Poltergeist = {
+  {
   name: "Poltergeist",
   source: "assets/images/sprites/poltergeist_gif.gif",
-  health: 25,
+  health: 1,
   max_health: 25,
   block: 0,
   weak: 0,
@@ -192,10 +192,10 @@ ennemy_Poltergeist = {
       }, 2000)
   }
 },
-ennemy_Possessed = {
+  {
   name: "Possessed",
   source: "assets/images/sprites/possessed_gif.gif",
-  health: 40,
+  health: 1,
   max_health: 40,
   block: 0,
   weak: 0,
@@ -230,10 +230,10 @@ ennemy_Possessed = {
     }, 2000)
   }
 },
-ennemy_Brahms = {
+ {
   name: "Brahms",
   source: "assets/images/sprites/brahms_gif.gif",
-  health: 80,
+  health: 1,
   max_health: 80,
   block: 0,
   weak: 0,
@@ -268,16 +268,16 @@ ennemy_Brahms = {
       }, 2000)
   }
 },
-ennemy_Slenderman = {
+ {
   name: "Slenderman",
   source: "assets/images/sprites/slenderman_gif.gif",
-  health: 150,
+  health: 1,
   max_health: 150,
   block: 0,
   weak: 0,
   vulnerable: 0,
   intro: "For your last mission, you must defeat Slenderman. This creature has caused multiple disapearances in the village.",
-  intro2:"Slenderman will gain strength whenever you play a card. This strength will be unleashed whenever it attacks.",
+  intro2:"Slenderman will gain strength every turn.",
   intent: undefined,
   intent_choices: ["attack", "defend", "debuff"],
   attack_phrase: ["Slenderman intends to attack next turn.", "Slenderman slams it's tentacles on you."], 
@@ -288,8 +288,6 @@ ennemy_Slenderman = {
   attack:()=>{
 
       ennemy_attack();
-      status_marker("enemy", ["Strength Reset"])
-      current_ennemy.attack_damage = 15;
       
 
   },
@@ -302,7 +300,7 @@ ennemy_Slenderman = {
       setTimeout(()=>{
           player.weak += 2;
           player.vulnerable += 2;
-          status_marker("enemy", "Strength Up");
+          status_marker("player", ["Weak", "Vulnerable"]);
           update_UI();  
           setTimeout(()=>{
               $(".SC_continue").show();

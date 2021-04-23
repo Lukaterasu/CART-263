@@ -59,6 +59,29 @@ p, li{
   font-family: 'Pangolin', cursive;
   font-size: 48px;
 }
+.intro {
+
+  font-family: 'Pangolin', cursive;
+}
+.intro h3{
+  font-size: 36px;
+  font-family: 'Pangolin', cursive; 
+}
+.intro p {
+  animation: Pulsate 4s linear infinite;
+}
+.END{
+  height: 864px;
+  width: 1536px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: green;
+  font-size: 48px;
+  /* ====! ======= */
+  display: none;
+}
 .PG{
   height: 864px;
   width: 1536px;
@@ -84,19 +107,20 @@ p, li{
 .PG_progress_bar{
   background-color: var(--white);
   height: 100%;
-  width: 75%;
+  width: 0%;
+  transition: 2s;
 }
 .VT{
   height: 864px;
   width: 1536px;
-  display: none;
+  display: grid;
   grid: repeat(16, 1fr) / repeat(24, 1fr);
   grid-gap: 10px;
   background-color: var(--black);
   
 
   /* ========================= !!! ================== */
-  /* display: block; */
+  display: none;
   
 }
 
@@ -110,6 +134,22 @@ p, li{
   justify-content: center;
   align-items: center;
   font-size: 24px;
+}
+.VT_new_card{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  margin: 0;
+
+}
+.VT_new_card p{
+ font-size: 24px;
+}
+.VT_new_card img {
+  transform: scale(0.5);
 }
 .VT_new_card:nth-of-type(3){
   grid-area:  8 / 7 / span 5 / span 3;
@@ -133,7 +173,7 @@ p, li{
   grid: repeat(16, 1fr) / repeat(24, 1fr);
   grid-gap: 10px;
   /* ========================= !!! ================== */
-  /* display: none; */
+  display: none;
   
  
 }
@@ -209,7 +249,7 @@ p, li{
 .SC_description_box {
   background-color: var(--black);
   padding: 10px;
-  z-index: 3;
+  z-index: 5;
   width: 300px;
   height: 100px;
   position: absolute;
